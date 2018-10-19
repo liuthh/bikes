@@ -4,7 +4,6 @@
       <i></i>
       登录
     </div>
-
     <div class="login-box">
       <!--左侧登录-->
       <div class="login-left fl">
@@ -14,29 +13,30 @@
         </ul>
         <div class="log-main clear">
           <!--普通登录-->
-          <div id="common_login">
-            <input type="text" placeholder="请输入手机号">
+          <div id="common_login" style="position: relative">
+            <input @change="checkmobile" id="phone" v-model="mobile" type="text" placeholder="请输入手机号">
+            <span id="dise" class="mobile_verify">{{msmobile}}</span>
           </div>
           <!--验证码登录-->
-          <div class="yzm-login">
-            <input v-model="ruleForm.mobile" class="yzm-mobble fl" type="text" placeholder="请输入手机号">
+          <div class="yzm-login" style="position: relative">
+            <input @change="checkmobile" v-model="mobile" class="yzm-mobble fl" type="text" placeholder="请输入手机号">
+            <span class="mobile_verify">{{msmobile}}</span>
             <a href="" class="fr">发送验证码</a>
           </div>
           <!--验证码登录结束-->
-          <div>
-            <input v-model="ruleForm.password" type="password" placeholder="请输入密码">
+          <div style="position: relative">
+            <input v-model="password" type="password" placeholder="请输入密码">
+            <span class="mobile_verify">{{message}}</span>
           </div>
           <div class="forgit-passwd">
             <a href="">忘记密码</a>
           </div>
           <!--立即登录-->
           <div class="login-now clear">
-            <a href="" class="login">
-              <button @click="doLogin">立即登录</button>
-            </a>
+              <button @click="doLogin" class="login">立即登录</button>
           </div>
           <div class="regist-box">
-            <p class="fl">还没有爱家账号</p>
+            <p class="fl">还没有佰客账号</p>
             <div class="fr">
               <span><a href=""><router-link to="/regist">立即注册</router-link></a></span>
             </div>
@@ -58,7 +58,7 @@
           <div class="erweima clear">
             <img src="../assets/images/erweima.jpg" alt="">
           </div>
-          <p class="ts">扫描关注爱家官方微信</p>
+          <p class="ts">扫描关注佰客官方微信</p>
         </div>
       </div>
     </div>
@@ -67,60 +67,88 @@
 
 <script>
   import axios from 'axios';
+  import $ from 'jquery'
+  $(function () {                                             //密码登录和普通登录切换效果
+    $('#verify-login-title').on('click',function (event) {
+      $('.yzm-login').show();
+      $('#common_login').hide();
+      $('input[name=password]').hide();
+      $('input[name=code]').show();
+      $('#common-login-title').removeClass("cur");
+      $('#verify-login-title').addClass("cur");
+      $('#login').hide()              //隐藏普通登录
+      $('#verify-login').show()       //显示验证码登录
+    });
+    $("#common-login-title").on('click',function (event) {
+      $('.yzm-login').hide();
+      $('#common_login').show();
+      $('input[name=password]').show();
+      $('input[name=code]').hide();
+      $('#common-login-title').addClass("cur");
+      $('#verify-login-title').removeClass("cur");
+    })
+  });
   export default {
     name: 'login',
-    data () {
+    data:function (){
       return {
-        userInfo :{
-          mobile : '',
-          password : '',
-        },
-        show : false,
+        mobile:'',
+        password:'',
+        message:'',
+        msmobile:'',
+        mspassword:'',
+        show: false,
       }
     },
-    methods : {
-      doLogin (){
-        if (this.mobile == ''){
-          alert('用户名不能为空');
+    methods: {
+      checkmobile:function(){
+        let myreg = /^1[34578]\d{9}$/;
+        if(this.mobile===""){
+          this.msmobile="手机号不能为空";
+        }else if(!myreg.test($("#phone").val())){
+          this.msmobile="请输入有效的手机号码";
+        }else{
+          this.msmobile="";
+        }
+      },
+      doLogin() {
+        if(this.password===""){
+          this.message = "密码不能为空";
           return false
         }
-        if (this.password == ''){
-          alert('密码名不能为空');
-          return false
+        let dd=new URLSearchParams();
+        dd.append('mobile',this.mobile);
+        dd.append('password',this.password);
+        axios.post('http://127.0.0.1:5000/login/',dd,{
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        })
+            .then(res => {
+              console.log(res);
+              if (res.data.code === 200) {
+                // this.$store.commit('setToken', res.data);
+                // localStorage.mobile = this.mobile;
+                // localStorage.token_expire = res.data.expire;
+                // localStorage.token = res.data.token;
+                this.message="seccess";
+                this.$router.push({path: '/'})
+              } else {
+                this.message=res.data.message
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
-        axios.post('http://127.0.0.1:5000/login/',JSON.stringify(this.userInfo))
-          .then(res => {
-            console.log(res);
-            if(res.data.code == 200){
-              this.$store.commit('setToken',res.data);
-              localStorage.userName = this.userInfo.mobile;
-              localStorage.token_expire = res.data.expire;
-              localStorage.token = res.data.token;
-              this.$notify({
-                title : '提示信息',
-                message : '登录成功',
-                type : 'success'
-              });
-              this.$router.push({path:'/'})
-            }else {
-              this.$notify({
-                title : '提示信息',
-                message : '账号或密码错误',
-                type : 'error'
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      }
-    },
-    // mounted (){
-    //   var wi=window.screen.width;
-    //   var hi=window.screen.height;
-    //   document.getElementById("bg").style.width=wi+"px";
-    //   document.getElementById("bg").style.height=hi+"px";
-    // },
+      },
+      // mounted (){
+      //   var wi=window.screen.width;
+      //   var hi=window.screen.height;
+      //   document.getElementById("bg").style.width=wi+"px";
+      //   document.getElementById("bg").style.height=hi+"px";
+      // },
+    // }
   }
 </script>
 
@@ -299,7 +327,17 @@ elements 结构元素 */
     margin-top: -19px;
     margin-right: 62px;
   }
-
+  .mobile_verify{
+    width: 150px;
+    height: 20px;
+    font-size: 10px;
+    position: absolute;
+    left: 14px;
+    top: 76px;
+    text-align: left;
+    line-height: 20px;
+    color: red;
+  }
 
   /*右侧登录主界面*/
   .login-right{

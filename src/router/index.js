@@ -6,7 +6,7 @@ import Login from '@/components/Login'
 import Luntan from '@/components/Luntan'
 import Luntanxq from '@/components/Luntanxq'
 import Regist from '@/components/Regist'
-import Log from '@/components/Log'
+import Search from '@/components/Search'
 
 Vue.use(Router)
 
@@ -30,7 +30,7 @@ export default new Router({
     },
     {
       path: '/luntan',
-      name: 'login',
+      name: 'luntan',
       component: Luntan,children:[]
     },
     {
@@ -44,9 +44,9 @@ export default new Router({
       component: Regist
     },
     {
-      path: '/log',
-      name: 'lgo',
-      component: Log
+      path: '/search',
+      name: 'search',
+      component: Search
     },
   ]
 })

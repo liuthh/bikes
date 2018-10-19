@@ -11,27 +11,30 @@
         <div class="log-main clear">
           <!--验证码注册-->
           <div class="yzm-login">
-            <input class="yzm-mobble fl" type="text" placeholder="请输入手机号" name="mobble">
-            <a href="" id="get_code" class="fr">发送验证码</a>
+            <input @change="checkmobile" v-model="mobile" id="phone" class="yzm-mobble fl" type="text" placeholder="请输入手机号" name="mobble">
+            <span class="mobile_verify">{{msmobile}}</span>
+            <button @click="Zhuce" class="fr">发送验证码</button>
           </div>
           <!--验证码注册结束-->
           <div>
-            <input type="text" placeholder="请输入短信验证码">
+            <input  v-model="code" type="text" placeholder="请输入短信验证码">
           </div>
-          <div>
-            <input type="text" placeholder="请输入2到16个字的昵称">
+
+          <div style="position: relative">
+            <input @change="checkname" v-model="username" type="text" placeholder="请输入2到16个字的昵称">
+            <span class="mobile_verify">{{msname}}</span>
           </div>
-          <div>
-            <input type="text" placeholder="请输入密码（6到20位字母、数字）">
+          <div style="position: relative">
+            <input @change="checkpassword" id="test" v-model="password" type="password" placeholder="请输入密码（6到20位字母、数字）">
+            <span class="mobile_verify">{{mspassword}}</span>
           </div>
-          <div>
-            <input type="text" placeholder="请确认密码">
+          <div style="position: relative">
+            <input  @change="checkrepassword" v-model="repassword" type="password" placeholder="请确认密码">
+            <span class="mobile_verify">{{msrepassword}}</span>
           </div>
           <!--立即登录-->
           <div class="login-now clear">
-            <a href="" class="login">
-              <span>立即登录</span>
-            </a>
+            <button @click="doRegist" class="login">立即登录</button>
           </div>
         </div>
       </div>
@@ -41,7 +44,7 @@
           <img src="../assets/images/or.png" alt="">
         </div>
         <div class="second-login fr">
-          <p>已有我爱我家账号
+          <p>已有佰客账号
             <span class="redirect-login"><a href="#"><router-link to="/login">立即登录</router-link><i></i></a></span>
           </p>
           <p>使用以下账号登录</p>
@@ -53,7 +56,7 @@
           <div class="erweima clear">
             <img src="../assets/images/erweima.jpg" alt="">
           </div>
-          <p class="ts">扫描关注爱家官方微信</p>
+          <p class="ts">扫描关注佰客官方微信</p>
         </div>
       </div>
     </div>
@@ -61,13 +64,115 @@
 </template>
 
 <script>
+  import axios from 'axios';
 export default {
   name: 'Regist',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  data:function () {
+   return{
+     //传递后台的数据
+     mobile:'',
+     code:'',
+     username:'',
+     password:'',
+     repassword:'',
+     //页面验证数据
+     //1.后台返回数据
+     message:'',
+     // 2. ；手机验证
+     msmobile:'',
+   //  3.昵称验证
+     msname:'',
+   //  4.密码验证
+     mspassword:'',
+   //  5.两次密码是否一致
+     msrepassword:'',
+   }
+  },
+  methods:{
+    checkmobile:function(){
+      let myreg = /^1[34578]\d{9}$/;
+      if(this.phone===""){
+        this.msmobile="手机号不能为空";
+      }else if(!myreg.test($("#phone").val())){
+        this.msmobile="请输入有效的手机号码";
+      }else{
+        this.msmobile="";
+      }
+    },
+    checkname:function(){
+      let myname = /^[\w\u4e00-\u9fa5]{2,8}$/;
+      if(this.username===""){
+        this.msname="昵称不能为空";
+      }else if(!myname.test(this.username)){
+        this.msname="昵称2-8位，且不能包含特殊字符";
+      }else{
+        this.msname="";
+      }
+    },
+    checkpassword:function(){
+      let pwdReg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/;
+      let value = $('#test').val();
+      if(this.password===""){
+        this.mspassword = "密码不能为空"
+      }else if(!pwdReg.test(value)){
+        this.mspassword = "密码为8-16位，需要有数字字母组成";
+      }else{
+        this.mspassword = "";
+      }
+    },
+    checkrepassword:function(){
+      if(this.repassword===""){
+        this.mspassword ="密码不能为空"
+      }else if(this.repassword !==this.password){
+        this.msrepassword = "两次输入的密码不一致"
+      }else{
+        this.msrepassword ="";
+      }
+    },
+    Zhuce(){
+      let d=new URLSearchParams();
+      d.append('mobile',this.mobile);
+      axios.post('http://127.0.0.1:5000/common/sendcode/',d,{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      })
+        .then(res=>{
+          if(res.data.code===200){
+            alert('发送成功')
+          }
+        })
+    },
+    doRegist(){
+      let dd=new URLSearchParams();
+      dd.append('mobile',this.mobile);
+      dd.append('password',this.password);
+      dd.append('code',this.code);
+      dd.append('repassword',this.repassword);
+      dd.append('username',this.username);
+      axios.post('http://127.0.0.1:5000/regist/',dd,{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.code === 200) {
+            // this.$store.commit('setToken', res.data);
+            // localStorage.mobile = this.mobile;
+            // localStorage.token_expire = res.data.expire;
+            // localStorage.token = res.data.token;
+            this.message="seccess";
+            this.$router.push({path: '/'})
+          } else {
+            this.message=res.data.message;
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-  }
+    }
 }
 </script>
 
@@ -114,6 +219,7 @@ elements 结构元素 */
   .fr{
     float: right;
   }
+
   .login-main{
     width: 780px;
     height: 600px;
@@ -174,7 +280,6 @@ elements 结构元素 */
     background: #fafafa;
     border-radius: 14px;
     padding-left: 10px;
-
   }
   .yzm-login{
     height: 55px;
@@ -186,21 +291,26 @@ elements 结构元素 */
     background: #fafafa;
     border-radius: 14px;
     padding-left: 10px;
+    position: relative;
   }
-  .yzm-login a{
+
+  .yzm-login button{
     color: #535d6a;
     margin-top: -4px;
     text-align: center;
     font-size: 15px;
-    background: #efefef;
+    background: rgba(171, 171, 171, 0.83);
     padding: 5px 10px;
     float: right;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-right: 9px;
     line-height: 30px;
     width: 95px;
     height: 40px;
+    text-decoration: none;
+    outline: none;
   }
   .log-main .forgit-passwd a{
     float: right;
@@ -212,7 +322,7 @@ elements 结构元素 */
   }
   .login-now{
     height: 94px;
-    margin-top: 10px;
+    margin-top: 20px;
   }
   .login-now .login{
     background: #fbb100;
@@ -225,11 +335,13 @@ elements 结构元素 */
     text-align: center;
     margin-left: 6px;
   }
-  .login-now span{
+  .login-now button{
     font-size: 18px;
     line-height: 50px;
     color: #fff;
     text-align: center;
+    background: none;
+    border: none;
   }
   .regist-box a{
     float: right;
@@ -245,6 +357,28 @@ elements 结构元素 */
     text-align: center;
     color: #a1a2a4;
     font-size: 15px;
+  }
+  .yzm-login .mobile_verify{
+    width: 150px;
+    height: 20px;
+    font-size: 10px;
+    position: absolute;
+    left: 14px;
+    top: 56px;
+    text-align: left;
+    line-height: 20px;
+    color: red;
+  }
+  .mobile_verify{
+    width: 150px;
+    height: 20px;
+    font-size: 10px;
+    position: absolute;
+    left: 14px;
+    top: 76px;
+    text-align: left;
+    line-height: 20px;
+    color: red;
   }
 
   /*右侧登录主界面*/
@@ -320,4 +454,5 @@ elements 结构元素 */
     font-size: 18px;
     cursor: pointer;
   }
+
 </style>

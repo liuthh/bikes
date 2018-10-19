@@ -6,6 +6,8 @@ import router from './router'
 import NavIndex from './components/NavIndex'
 import Footer from './components/Footer'
 import PageIndex from './components/PageIndex'
+// import axios from 'axios'
+// Vue.prototype.$http = axios;
 Vue.config.productionTip = false
 
 

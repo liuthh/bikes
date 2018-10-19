@@ -13,27 +13,13 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li><router-link to="/">我的首页</router-link></li>
-          <li><a href="#">全部分类</a></li>
-          <li><a href="#">自行车</a></li>
+          <li><router-link to="/search">全部分类</router-link></li>
+          <li><router-link to="/search">自行车</router-link></li>
           <li><a href="#">人身商品</a></li>
           <li><a href="#">车身商品</a></li>
           <li><router-link to="/luntan">论坛</router-link></li>
           <li><router-link to="/login">登陆</router-link></li>
           <li><router-link to="/regist">注册</router-link></li>
-          <!--<li class="dropdown">-->
-            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">账号管理-->
-              <!--<span class="caret"></span></a>-->
-            <!--<ul class="dropdown-menu">-->
-              <!--<li class="dropdown-header">管理</li>-->
-              <!--<li><a href="#">博客信息</a></li>-->
-              <!--<li><a href="#">创建博文</a></li>-->
-              <!--<li><a href="#">博客管理</a></li>-->
-              <!--<li class="divider"></li>-->
-              <!--<li class="dropdown-header">账号</li>-->
-              <!--<li><a href="#">更改密码</a></li>-->
-              <!--<li><a href="#">退出登录</a></li>-->
-            <!--</ul>-->
-          <!--</li>-->
         </ul>
         <form class="navbar-form navbar-right">
           <div class="form-group">
