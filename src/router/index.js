@@ -7,6 +7,10 @@ import Luntan from '@/components/Luntan'
 import Luntanxq from '@/components/Luntanxq'
 import Regist from '@/components/Regist'
 import Search from '@/components/Search'
+import Dindan from '@/components/Dindan'
+import Luntans from '@/components/tiezi/Luntans'
+import Buycar from '@/components/Buycar'
+import Details from '@/components/Details'
 
 Vue.use(Router)
 
@@ -31,7 +35,9 @@ export default new Router({
     {
       path: '/luntan',
       name: 'luntan',
-      component: Luntan,children:[]
+      component: Luntan,children:[
+        {path: '', name: 'luntan', component: Luntan},
+      ]
     },
     {
       path: '/luntanxq',
@@ -47,6 +53,26 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: Search
+    },
+    {
+      path: '/dindan',
+      name: 'dindan',
+      component: Dindan
+    },
+    {
+      path: '/luntans',
+      name: 'luntans',
+      component: Luntans
+    },
+    {
+      path: '/buycar',
+      name: 'buycar',
+      component: Buycar
+    },
+    {
+      path: '/details',
+      name: 'details',
+      component: Details
     },
   ]
 })

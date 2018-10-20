@@ -1,41 +1,43 @@
 <template>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href=""><router-link to="/">BIKES</router-link></a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><router-link to="/">我的首页</router-link></li>
-          <li><router-link to="/search">全部分类</router-link></li>
-          <li><router-link to="/search">自行车</router-link></li>
-          <li><a href="#">人身商品</a></li>
-          <li><a href="#">车身商品</a></li>
-          <li><router-link to="/luntan">论坛</router-link></li>
-          <li><router-link to="/login">登陆</router-link></li>
-          <li><router-link to="/regist">注册</router-link></li>
-        </ul>
-        <form class="navbar-form navbar-right">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="关键字">
-          </div>
-          <button type="submit" class="btn btn-default">搜索</button>
-        </form>
-        <!--<div id="login">-->
+  <div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href=""><router-link to="/">BIKES</router-link></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><router-link to="/">我的首页</router-link></li>
+            <li><router-link to="/search">全部分类</router-link></li>
+            <li><router-link to="/search">自行车</router-link></li>
+            <li><router-link to="/luntans">人身商品</router-link></li>
+            <li><router-link to="/luntans">车身商品</router-link></li>
+            <li><router-link to="/luntans">论坛</router-link></li>
+            <li><router-link to="/login">登陆</router-link></li>
+            <li><router-link to="/regist">注册</router-link></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="关键字">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+          <!--<div id="login">-->
           <!--<ul class="nav navbar-nav">-->
-            <!--<li><router-link to="/login">登陆</router-link></li>-->
-            <!--<li><router-link to="/regist">注册</router-link></li>-->
+          <!--<li><router-link to="/login">登陆</router-link></li>-->
+          <!--<li><router-link to="/regist">注册</router-link></li>-->
           <!--</ul>-->
-        <!--</div>-->
+          <!--</div>-->
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </template>
 <script>
 export default {

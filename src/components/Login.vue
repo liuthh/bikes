@@ -127,10 +127,7 @@
             .then(res => {
               console.log(res);
               if (res.data.code === 200) {
-                // this.$store.commit('setToken', res.data);
-                // localStorage.mobile = this.mobile;
-                // localStorage.token_expire = res.data.expire;
-                // localStorage.token = res.data.token;
+                sessionStorage.mobile=res.data.mobile;
                 this.message="seccess";
                 this.$router.push({path: '/'})
               } else {

@@ -4,15 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import NavIndex from './components/NavIndex'
-import Footer from './components/Footer'
+import Foot from './components/Foot'
 import PageIndex from './components/PageIndex'
-// import axios from 'axios'
+import axios from 'axios'
+axios.defaults.withCredentials=true;
 // Vue.prototype.$http = axios;
 Vue.config.productionTip = false
 
 
 Vue.component('nav-index',NavIndex);
-Vue.component('nav-footer',Footer);
+Vue.component('nav-footer',Foot);
 Vue.component('page-index',PageIndex);
 /* eslint-disable no-new */
 new Vue({

@@ -109,11 +109,9 @@ export default {
     background: rgba(255,255,255,0.1);
   }
   .bbb{
-
     margin-top: 50px;
-    /*margin: 50px auto;*/
+    padding-bottom: 10px;
     background: url("//gdp.alicdn.com/imgextra/i4/1810404213/TB27ilYdhuI.eBjy0FdXXXgbVXa-1810404213.jpg");
-
     background-repeat: no-repeat;
     background-position: center top;
     background-attachment: fixed;

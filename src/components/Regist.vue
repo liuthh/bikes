@@ -2,7 +2,7 @@
   <div class="login-main">
     <div class="login-title">
       <i></i>
-      登录
+      注册
     </div>
 
     <div class="login-box">
@@ -13,7 +13,7 @@
           <div class="yzm-login">
             <input @change="checkmobile" v-model="mobile" id="phone" class="yzm-mobble fl" type="text" placeholder="请输入手机号" name="mobble">
             <span class="mobile_verify">{{msmobile}}</span>
-            <button @click="Zhuce" class="fr">发送验证码</button>
+            <button @click="Zhuce" class="fr" id="zc">{{contents}}</button>
           </div>
           <!--验证码注册结束-->
           <div>
@@ -34,7 +34,7 @@
           </div>
           <!--立即登录-->
           <div class="login-now clear">
-            <button @click="doRegist" class="login">立即登录</button>
+            <button @click="doRegist" class="login">立即注册</button>
           </div>
         </div>
       </div>
@@ -86,17 +86,22 @@ export default {
      mspassword:'',
    //  5.两次密码是否一致
      msrepassword:'',
+     contents:'发送验证码',
+
+     show:false
+
    }
   },
   methods:{
     checkmobile:function(){
       let myreg = /^1[34578]\d{9}$/;
-      if(this.phone===""){
+      if(this.mobile===""){
         this.msmobile="手机号不能为空";
       }else if(!myreg.test($("#phone").val())){
         this.msmobile="请输入有效的手机号码";
       }else{
         this.msmobile="";
+        this.show=true;
       }
     },
     checkname:function(){
@@ -130,6 +135,7 @@ export default {
       }
     },
     Zhuce(){
+      let vm=this;
       let d=new URLSearchParams();
       d.append('mobile',this.mobile);
       axios.post('http://127.0.0.1:5000/common/sendcode/',d,{
@@ -139,7 +145,18 @@ export default {
       })
         .then(res=>{
           if(res.data.code===200){
-            alert('发送成功')
+            document.querySelector("#zc").style.background = "gray";
+            let s =60;
+            vm.tt = setInterval(function(){
+              vm.contents = s + "秒";
+              if(s>0){
+                s--;
+              }else{
+                clearInterval(vm.tt);
+                vm.contents = "验证密码";
+                document.querySelector("#zc").style.background = "#B8B8B8"
+              }
+            },1000)
           }
         })
     },
