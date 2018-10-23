@@ -11,8 +11,9 @@ import Dindan from '@/components/Dindan'
 import Luntans from '@/components/tiezi/Luntans'
 import Buycar from '@/components/Buycar'
 import Details from '@/components/Details'
-
-Vue.use(Router)
+import Personal from '@/components/personal/Personal'
+import Myinfo from '@/components/personal/Myinfo'
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -73,6 +74,18 @@ export default new Router({
       path: '/details',
       name: 'details',
       component: Details
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component: Personal,children:[
+        {path:'myinfo',name:'myinfo',component:Myinfo}
+      ]
+    },
+    {
+      path: '/myinfo',
+      name: 'myinfo',
+      component: Myinfo
     },
   ]
 })

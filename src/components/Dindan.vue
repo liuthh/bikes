@@ -61,12 +61,17 @@ export default {
   name: 'dindan',
   data () {
     return {
-      //
+      // 订单信息
       list:[],
+      //地址信息
       add:[],
+      //商品id
       id: '',
+      //地址id
       add_id:'',
+      //商品总价
       prices:'',
+      //购买数量
       num:1,
     }
   },
@@ -119,8 +124,14 @@ export default {
       let ti=new URLSearchParams();
       ti.append('good_id',this.id);
       ti.append('address_id',this.add_id);
-      ti.append('price',this.list.price);
-      ti.append('price',this.num);
+      ti.append('price',this.prices);
+      ti.append('number',this.num);
+      axios.post('http://127.0.0.1:5000/regist/',ti,{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      })
+
     },
   }
 }
