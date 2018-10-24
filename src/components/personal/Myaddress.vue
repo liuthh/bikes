@@ -1,95 +1,68 @@
 <template>
- <div class="container">
-   <div class="row">
-     <div class="col-md-12 head">
-       <div class="col-md-12 title1">我的地址</div>
-       <div class="col-md-12 line"></div>
-       <div class="col-md-12 main">
-         <div class="col-md-12">
-           <div class="col-md-6">
-             <div class="border">
-               <div class="col-md-12" style="margin: 60px 120px 10px">
-                 <img src="../assets/image/add.png" alt="">
-               </div>
-               <div class="col-md-12" style="margin-left: 97.5px">添加新地址</div>
-             </div>
-           </div>
-           <div class="col-md-6">
-             <div class="border">
-               <div class="col-md-12 name">昵称</div>
-               <div class="col-md-12 content">
-                 <div class="col-md-12">123456789</div>
-                 <div class="col-md-12">江苏省 苏州市 吴中区</div>
-                 <div class="col-md-12">文萃人才公寓</div>
-               </div>
-             </div>
-           </div>
-
-         </div>
-       </div>
-     </div>
-   </div>
- </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 title"><p>收货地址</p></div>
+      <div class="col-md-12">
+        <div class="col-md-3 new-address">
+          <p>添加新地址</p>
+        </div>
+        <div class="col-md-3">
+          <h4>刘杨</h4>
+          <p>17777777777</p>
+          <p>安徽蒙城</p>
+          <div class="addr"><a href="#">修改</a><a href="#">删除</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
     export default {
-        name: "Myaddress"
+        name: "myaddress"
     }
 </script>
 
 <style scoped>
-  .border{
-    width: 270px;
-    height: 180px;
-    border: 1px solid lightgrey;
-    /*background: lightslategray;*/
-    margin: auto;
-  }
-
-  .border div{
-    padding: 0;
-  }
-  .name{
-    margin-top: 20px;
-    margin-left: 15px;
-    font-size: 1.1em;
-  }
-  .content{
-    margin-top: 20px;
-    margin-left: 15px;
-  }
   .container{
-    width: 940px;
-    margin-top: 50px;
-    height: 500px;
-    background: white;
-    padding: 0;
-  }
-  .head{
     width: 840px;
-    /*background: lightgreen;*/
-    margin-left: 65px;
-    margin-top: 60px;
-    padding: 0;
-  }
-  .title1{
-    font-size: 1.4em;
-    font-weight: bold;
-    padding: 0;
-  }
-  .line{
-    height: 1px;
-    background: #E6E6E6;
+    min-height: 440px;
+    background: white;
     margin-top: 20px;
+    float: right;
+    margin-right: 10px;
   }
-  .main{
-    margin-top: 30px;
-    padding: 0;
-    font-size: 1.1em;
+  .title p{
+    width: 90%;
+    height: 50px;
+    font-size: 30px;
+    margin-top: 20px;
+    border-bottom: solid 1px #f2f2f2;
+    margin-left: 20px;
   }
-
-
-
-
+  .col-md-3{
+    border: solid 1px #e0e0e0;
+    height: 153px;
+    margin-left: 21px;
+    width: 227px;
+  }
+  .new-address{
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    color: #b0b0b0;
+    float: left;
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 150px;
+  }
+  .addr{
+    position: absolute;
+    right: 24px;
+    bottom: 10px;
+  }
+  .addr a{
+    margin-left: 5px;
+    color: rgba(255, 62, 23, 0.67);
+    text-decoration: none;
+  }
 </style>

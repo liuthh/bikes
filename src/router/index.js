@@ -13,6 +13,9 @@ import Buycar from '@/components/Buycar'
 import Details from '@/components/Details'
 import Personal from '@/components/personal/Personal'
 import Myinfo from '@/components/personal/Myinfo'
+import Mypwd from '@/components/personal/Mypwd'
+import Myorder from '@/components/personal/Myorder'
+import Myaddress from '@/components/personal/Myaddress'
 Vue.use(Router);
 
 export default new Router({
@@ -79,7 +82,10 @@ export default new Router({
       path: '/personal',
       name: 'personal',
       component: Personal,children:[
-        {path:'myinfo',name:'myinfo',component:Myinfo}
+        {path:'',name:'myinfo',component:Myinfo},
+        {path:'mypwd',name:'mypwd',component:Mypwd},
+        {path:'myorder',name:'myorder',component:Myorder},
+        {path:'myaddress',name:'myaddress',component:Myaddress},
       ]
     },
     {

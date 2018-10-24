@@ -10,10 +10,10 @@
           </div>
           <div class="col-md-7 describe" style="margin-top: 30px">
             <div class="col-md-12 describe1" style="font-size: 1.4em;">
-              <p>捷安特ATX 890变速成人男油压碟刹30速山地自行车 消光亮黑/消光荧光亮橘橙 27.5X16 S 适合身高160-173cm</p>
+              <p>{{list.title}}</p>
             </div>
             <div class="col-md-12 describe2">【破损补寄】【无理由退换货】【包邮】</div>
-            <div class="col-md-12 describe3">￥500.0</div>
+            <div class="col-md-12 describe3">￥{{list.price}}</div>
             <div class="col-md-12"><div class="line"></div></div>
             <div class="col-md-12 " style="font-size: 1.1em">颜色</div>
             <div class="col-md-12">
@@ -44,12 +44,40 @@
 </template>
 
 <script>
+  import axios from 'axios'
 export default {
   name: 'details',
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: '',
+      list:[],
+      id:'',
     }
+  },
+  created: function () {
+    this.id = this.$route.params.bikes_id;
+  },
+  mounted:function(){
+    this.getId();
+  },
+  methods: {
+    getId: function () {
+      let vm = this;
+      axios.get('http://127.0.0.1:5000/getSpDetial/' + '?spId=' + vm.id)//请求数据
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          if (res.data.code === 305) {
+            this.$router.push({path: '/login'})
+          }
+          vm.list = res.data.good_imgs_dic;
+          vm.prices = res.data.good_dic.price;
+          vm.add = res.data.addresses_dic;
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
   }
 }
 </script>

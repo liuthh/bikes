@@ -41,7 +41,7 @@
             <!--<div class="col-md-1 search-content-title ">人身商品:</div>-->
             <ul class="list-inline">
               <li class="a">车身商品：</li>
-              <li class="b"><a href="#">所有</a></li>
+              <li class="b">所有</li>
               <li class="c"><a href="#">码表</a></li>
               <li class="c"><a href="#">水壶</a></li>
               <li class="c"><a href="#">车灯</a></li>
@@ -67,7 +67,7 @@
           <div class="goods">
             <div class="col-md-12"><img src="../assets/image/bike1.jpg" alt=""></div>
             <div class="col-md-12  aa">
-              <p><router-link to="/search" v-text="bikes.title"></router-link></p>
+              <p><router-link :to="{name: 'details', params: { bikes_id: bikes.id}}" v-text="bikes.title"></router-link></p>
             </div>
             <div class="col-md-12 sell-count">
               <p>已售出{{bikes.sales}}件</p>

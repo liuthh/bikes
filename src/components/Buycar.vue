@@ -37,6 +37,50 @@
         <div class="col-md-2 prices">￥500</div>
         <div class="col-md-1 operation">删除</div>
       </div>
+      <div class="col-md-12 main">
+        <div class="col-md-1">
+          <input type="checkbox">
+        </div>
+        <div class="col-md-4 a">
+          <div class="col-md-3 ">
+            <img src="../assets/image/gwc.jpg" alt="">
+          </div>
+          <div class="col-md-9 ">
+            <div class="col-md-12">捷安特ARX 3机械碟刹27.5轮径21速成人变速山地自行车</div>
+            <div class="col-md-12 color">颜色分类：14.5 XS 亮黑 </div>
+          </div>
+        </div>
+        <div class="col-md-2 price">￥500</div>
+        <div class="col-md-2">
+          <button type="button">-</button>
+          <span>1</span>
+          <button type="button">+</button>
+        </div>
+        <div class="col-md-2 prices">￥500</div>
+        <div class="col-md-1 operation">删除</div>
+      </div>
+      <div class="col-md-12 main">
+        <div class="col-md-1">
+          <input type="checkbox">
+        </div>
+        <div class="col-md-4 a">
+          <div class="col-md-3 ">
+            <img src="../assets/image/gwc.jpg" alt="">
+          </div>
+          <div class="col-md-9 ">
+            <div class="col-md-12">捷安特ARX 3机械碟刹27.5轮径21速成人变速山地自行车</div>
+            <div class="col-md-12 color">颜色分类：14.5 XS 亮黑 </div>
+          </div>
+        </div>
+        <div class="col-md-2 price">￥500</div>
+        <div class="col-md-2">
+          <button type="button">-</button>
+          <span>1</span>
+          <button type="button">+</button>
+        </div>
+        <div class="col-md-2 prices">￥500</div>
+        <div class="col-md-1 operation">删除</div>
+      </div>
       <div class="col-md-12 count">
         <div class="col-md-1">
           <input type="checkbox"> 全选

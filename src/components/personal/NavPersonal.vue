@@ -1,47 +1,114 @@
 <template>
   <!-------------------------------------------左侧导航--------------------------------------------------->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <ul class="list-unstyled">
-            <li class="current">个人信息</li>
-            <li>我的收藏</li>
-            <li>我的订单</li>
-            <li>修改头像</li>
-            <li>修改地址</li>
-            <li>修改密码</li>
-          </ul>
+  <div class="container">
+    <div class="content_right col-md-12">
+      <div class="user_show">
+        <div class="user_photo_box">
+          <div class="user_photo">
+            <img src="../../assets/image/login.jpg" alt="用户头像">
+          </div>
+          <div class="user_imformation">
+            <h5 class="user_name">刘帅</h5>
+            <p class="description">我要买买买！</p>
+          </div>
         </div>
       </div>
+      <ul class="list-unstyled">
+        <li class="current"><router-link to="/personal"><span>修改个人信息</span></router-link></li>
+        <li><router-link to="/personal/"><span>我的收藏</span></router-link></li>
+        <li><router-link to="/personal/myorder"><span>我的订单</span></router-link></li>
+        <li><router-link to="/personal/myimg"><span>修改头像</span></router-link></li>
+        <li><router-link to="/personal/myaddress"><span>收货地址</span></router-link></li>
+        <li><router-link to="/personal/mypwd"><span>修改密码</span></router-link></li>
+      </ul>
     </div>
+  </div>
 </template>
 <script>
-    export default {
-        name: "navpersonal",
-    }
+  export default {
+    name: "navpersonal",
+  }
 </script>
 
 <style scoped>
 
-  .container{
+  body {
+    background-color: #f0f2f5;
+  }
+  a,p,span{
+    text-decoration: none!important;
+  }
+  .container {
     width: 275px;
-    background: white;
-    border: solid 1px #eee;
+    margin-top: 0px;
+    overflow: hidden;
     float: left;
   }
-  .col-md-12{
-    padding: 15px;
+
+  .content_right {
+    background: white;
+    border: 1px solid #f2f2f2;
+    margin-top: 20px;
+    float: left;
+  }
+ .content_right li span{
+   text-decoration: none!important;
+   color: #333;
+ }
+  .content_right li span:hover {
+    color: #F54944;
+    cursor: pointer;
   }
 
-  ul li{
+  ul li {
     height: 40px;
-    padding: 15px;
     line-height: 20px;
     text-align: center;
     border-bottom: solid 1px #F2F2F2;
   }
 
-  .current{
-    background: rosybrown;
+  .user_show {
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
   }
+
+  .user_photo {
+    float: left;
+    width: 50%;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    overflow: hidden;
+  }
+
+  .user_photo_box {
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .user_photo img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .user_imformation {
+    float: left;
+    padding: 10px;
+  }
+
+  .user_imformation h5 {
+    color: #666666;
+  }
+
+  .user_imformation p {
+    font-size: 12px;
+    font-family: "Micosoft Yahei";
+  }
+
+  .list-unstyled span {
+    font-size: 16px;
+    line-height: 40px;
+  }
+
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-12 title"><p>编辑个人资料</p></div>
+      <div class="col-md-12 title"><p>修改密码</p></div>
       <div class="col-md-12 main">
         <div class="col-md-offset-1 col-md-2">
-          <label>昵称</label>
+          <label>原密码</label>
         </div>
         <div class="col-md-6">
           <input type="text">
@@ -12,7 +12,7 @@
       </div>
       <div class="col-md-12 main">
         <div class="col-md-offset-1 col-md-2">
-          <label>邮箱</label>
+          <label>新密码</label>
         </div>
         <div class="col-md-6">
           <input type="text">
@@ -20,23 +20,7 @@
       </div>
       <div class="col-md-12 main">
         <div class="col-md-offset-1 col-md-2">
-          <label>手机号</label>
-        </div>
-        <div class="col-md-6">
-          <input type="text">
-        </div>
-      </div>
-      <div class="col-md-12 main">
-        <div class="col-md-offset-1 col-md-2">
-          <label>真实姓名</label>
-        </div>
-        <div class="col-md-6">
-          <input type="text">
-        </div>
-      </div>
-      <div class="col-md-12 main">
-        <div class="col-md-offset-1 col-md-2">
-          <label>身份证号码</label>
+          <label>确认密码</label>
         </div>
         <div class="col-md-6">
           <input type="text">
@@ -53,7 +37,7 @@
 
 <script>
     export default {
-        name: "myinfo"
+        name: "mypwd"
     }
 </script>
 

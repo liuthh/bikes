@@ -39,7 +39,7 @@
           </div>
           <div class="col-md-12 border2">
             <div class="col-md-12 border2-content">
-              <div class="col-md-2"><img src="../assets/image/ordergood.jpg" alt=""></div>
+              <div class="col-md-2"><img src="../../assets/image/ordergood.jpg" alt=""></div>
               <div class="col-md-7">
                 <div class="col-md-12">家用创意菜盘子圆盘 釉下彩复古</div>
                 <div class="col-md-12">¥99.00×1</div>
@@ -49,8 +49,6 @@
                 <button class="btn2" style="margin-top: 8px">订单详情</button>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -59,7 +57,7 @@
 
 <script>
     export default {
-        name: "Myorder"
+        name: "myorder"
     }
 </script>
 
@@ -81,11 +79,12 @@
   }
 
 .container{
-  width: 940px;
-  height: 500px;
+  width: 840px;
+  min-height: 440px;
   background: white;
-  margin-top: 50px;
-  /*padding: 0px;*/
+  margin-top: 20px;
+  float: right;
+  margin-right: 10px;
 }
   .title1{
     background: white;

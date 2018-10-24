@@ -20,6 +20,6 @@ export default {
   background: #f5f5f5;
 }
   .aaa{
-    min-height: 672px;
+    min-height: 622px;
   }
 </style>
