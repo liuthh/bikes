@@ -107,7 +107,6 @@
             <div class="li4">
               <div class="li4-1">骑行游记</div>
               <div class="li4-2">
-
                 <img src="../assets/images/huifu.svg" alt="">
                 66
               </div>
@@ -128,13 +127,27 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
-    name: 'Luntan',
+    name: 'luntan',
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: '',
+        pagesize:'',
       }
-    }
+    },
+    getId: function () {
+      let vm = this;
+      axios.get('http://127.0.0.1:5000/genarateOrder/' + '?good_id=' + vm.id)//请求数据
+        .then(res => {
+          if (res.data.code === 305) {
+            this.$router.push({path: '/login'})
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
   }
 </script>
 
@@ -146,10 +159,9 @@
   }
 
   .row {
-    margin-top: 100px;
+    margin-top: 20px;
     margin-left: 20px;
   }
-
   .row{
   }
   .row .col-md-12{

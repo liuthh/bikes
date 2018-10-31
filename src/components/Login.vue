@@ -58,7 +58,7 @@
           <div class="erweima clear">
             <img src="../assets/images/erweima.jpg" alt="">
           </div>
-          <p class="ts">扫描关注佰客官方微信</p>
+          <p class="ts">扫描关注佰克官方微信</p>
         </div>
       </div>
     </div>
@@ -128,7 +128,7 @@
               console.log(res);
               if (res.data.code === 200) {
                 sessionStorage.mobile=res.data.mobile;
-                this.message="seccess";
+                sessionStorage.setItem('mobile',this.mobile);
                 this.$router.push({path: '/'})
               } else {
                 this.message=res.data.message
@@ -139,13 +139,6 @@
             })
         }
       },
-      // mounted (){
-      //   var wi=window.screen.width;
-      //   var hi=window.screen.height;
-      //   document.getElementById("bg").style.width=wi+"px";
-      //   document.getElementById("bg").style.height=hi+"px";
-      // },
-    // }
   }
 </script>
 

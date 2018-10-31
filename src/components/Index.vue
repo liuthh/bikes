@@ -13,73 +13,74 @@
     <div class="container">
       <div class="row content" >
         <div class="col-md-6 gonglu">
-          <a href=""><img src="../assets/image/gonglu11.png" alt="" ></a>
+          <router-link :to="{name:'search',params:{content:1}}"><img src="../assets/image/gonglu11.png" alt="" ></router-link>
+
         </div>
         <div class="col-md-6 gonglu2">
-          <a href=""><img src="../assets/image/gonglu22.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu22.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu33.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu33.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu44.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu44.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu55.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu55.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu66.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu66.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu2">
-          <a href=""><img src="../assets/image/gonglu77.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu77.png" alt="" ></router-link>
         </div>
         <div class="col-md-12">
           <a href=""><img src="../assets/image/TB2ZReHdUWO.eBjSZPcXXbopVXa-1810404213.png" alt="" style="margin-left: -15px"></a>
         </div>
         <div class="col-md-6 gonglu">
-          <a href=""><img src="../assets/image/shandi11.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/shandi11.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu2">
-          <a href=""><img src="../assets/image/gonglu22.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu22.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu33.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu33.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu44.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu44.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu55.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu55.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/gonglu66.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu66.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu2">
-          <a href=""><img src="../assets/image/gonglu77.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/gonglu77.png" alt="" ></router-link>
         </div>
         <div class="col-md-12 " style="margin-left: -15px" >
           <a href=""><img src="../assets/image/nvsheng1.png" alt="" ></a>
         </div>
         <div class="col-md-6 gonglu">
-          <a href=""><img src="../assets/image/nv22.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv22.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu2">
-          <a href=""><img src="../assets/image/nv33.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv33.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/nv44.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv44.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/nv66.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv66.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/nv55.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv55.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu3" >
-          <a href=""><img src="../assets/image/nv77.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv77.png" alt="" ></router-link>
         </div>
         <div class="col-md-6 gonglu2">
-          <a href=""><img src="../assets/image/nv88.png" alt="" ></a>
+          <router-link :to="{name:'details',params:{bikes_id:1}}"><img src="../assets/image/nv88.png" alt="" ></router-link>
         </div>
         <div class="col-md-12 " style="margin-left: -15px" >
           <a href=""><img src="//gdp.alicdn.com/imgextra/i4/1810404213/TB2DFg6cYaI.eBjSszdXXaB6XXa-1810404213.png" alt="" ></a>
@@ -91,7 +92,7 @@
 
 <script>
 export default {
-  name: 'Index',
+  name: 'index',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

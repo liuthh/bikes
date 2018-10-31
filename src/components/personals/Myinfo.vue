@@ -7,7 +7,7 @@
           <label>昵称</label>
         </div>
         <div class="col-md-6">
-          <input type="text">
+          <input type="text" v-model="name">
         </div>
       </div>
       <div class="col-md-12 main">
@@ -15,7 +15,7 @@
           <label>邮箱</label>
         </div>
         <div class="col-md-6">
-          <input type="text">
+          <input type="text" v-model="email">
         </div>
       </div>
       <div class="col-md-12 main">
@@ -23,7 +23,7 @@
           <label>手机号</label>
         </div>
         <div class="col-md-6">
-          <input type="text">
+          <input type="text" v-model="mobile">
         </div>
       </div>
       <div class="col-md-12 main">
@@ -31,7 +31,7 @@
           <label>真实姓名</label>
         </div>
         <div class="col-md-6">
-          <input type="text">
+          <input type="text" v-model="username">
         </div>
       </div>
       <div class="col-md-12 main">
@@ -39,12 +39,12 @@
           <label>身份证号码</label>
         </div>
         <div class="col-md-6">
-          <input type="text">
+          <input type="text" v-model="identity">
         </div>
       </div>
       <div class="col-md-12">
         <div class="col-md-offset-3 col-md-2">
-          <button>确认修改</button>
+          <button @click="tijiao">确认修改</button>
         </div>
       </div>
     </div>
@@ -52,8 +52,49 @@
 </template>
 
 <script>
+  import axios from 'axios'
     export default {
-        name: "myinfo"
+        name: "myinfo",
+      data(){
+          return{
+            msg:'',
+            //昵称
+            name:'',
+          //  手机号
+            mobile:'',
+          //  邮箱
+            email:'',
+          //  真实姓名
+            username:'',
+          //  身份证号
+            identity:'',
+            list:[],
+          }
+      },
+      created:function () {
+        this.getData();
+      },
+      methods:{
+        getData:function () {
+          let vm = this;
+          axios.get('http://127.0.0.1:5000/personal/')//请求数据
+            .then(res => {
+              console.log(res);
+              console.log(res.data);
+              if (res.data.code === 200) {
+                this.list=res.data.message
+              } else {
+                vm.msg= res.data.message;
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        },
+        tijiao:function () {
+
+        }
+      }
     }
 </script>
 

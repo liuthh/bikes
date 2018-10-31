@@ -91,13 +91,26 @@
   <!--</div>-->
 </template>
 <script>
+  import axios from 'axios'
 export default {
-  name: 'Luntanxq',
+  name: 'luntanxq',
   data:function() {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  }
+  },
+  getId: function () {
+    let vm = this;
+    axios.get('http://127.0.0.1:5000/genarateOrder/' + '?good_id=' + vm.id)//请求数据
+      .then(res => {
+        if (res.data.code === 305) {
+          this.$router.push({path: '/login'})
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
 }
 </script>
 

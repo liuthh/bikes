@@ -4,7 +4,6 @@
       <i></i>
       注册
     </div>
-
     <div class="login-box">
       <!--左侧登录-->
       <div class="login-left fl">
@@ -19,7 +18,6 @@
           <div>
             <input  v-model="code" type="text" placeholder="请输入短信验证码">
           </div>
-
           <div style="position: relative">
             <input @change="checkname" v-model="username" type="text" placeholder="请输入2到16个字的昵称">
             <span class="mobile_verify">{{msname}}</span>
@@ -44,8 +42,8 @@
           <img src="../assets/images/or.png" alt="">
         </div>
         <div class="second-login fr">
-          <p>已有佰客账号
-            <span class="redirect-login"><a href="#"><router-link to="/login">立即登录</router-link><i></i></a></span>
+          <p>已有佰克账号
+            <span class="redirect-login"><a href="#"><router-link to="/login">立即登录</router-link></a></span>
           </p>
           <p>使用以下账号登录</p>
           <ul class="tb">
@@ -56,7 +54,7 @@
           <div class="erweima clear">
             <img src="../assets/images/erweima.jpg" alt="">
           </div>
-          <p class="ts">扫描关注佰客官方微信</p>
+          <p class="ts">扫描关注佰克官方微信</p>
         </div>
       </div>
     </div>
@@ -87,9 +85,7 @@ export default {
    //  5.两次密码是否一致
      msrepassword:'',
      contents:'发送验证码',
-
      show:false
-
    }
   },
   methods:{
@@ -156,7 +152,9 @@ export default {
                 vm.contents = "验证密码";
                 document.querySelector("#zc").style.background = "#B8B8B8"
               }
-            },1000)
+            },1000);
+          }else {
+            this.msmobile='该手机号已被注册';
           }
         })
     },
@@ -175,10 +173,6 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data.code === 200) {
-            // this.$store.commit('setToken', res.data);
-            // localStorage.mobile = this.mobile;
-            // localStorage.token_expire = res.data.expire;
-            // localStorage.token = res.data.token;
             this.message="seccess";
             this.$router.push({path: '/'})
           } else {
@@ -397,7 +391,6 @@ elements 结构元素 */
     line-height: 20px;
     color: red;
   }
-
   /*右侧登录主界面*/
   .login-right{
     width: 308px;

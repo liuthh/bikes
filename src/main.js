@@ -7,11 +7,10 @@ import NavIndex from './components/NavIndex'
 import Foot from './components/Foot'
 import PageIndex from './components/PageIndex'
 import axios from 'axios'
+import VDistpicker from 'v-distpicker'
+Vue.component('v-distpicker', VDistpicker);
 axios.defaults.withCredentials=true;
-// Vue.prototype.$http = axios;
-Vue.config.productionTip = false
-
-
+Vue.config.productionTip = false;
 Vue.component('nav-index',NavIndex);
 Vue.component('nav-footer',Foot);
 Vue.component('page-index',PageIndex);

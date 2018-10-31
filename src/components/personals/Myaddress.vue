@@ -19,7 +19,13 @@
 
 <script>
     export default {
-        name: "myaddress"
+      name: "myaddress",
+      data(){
+        return{
+          list:'',
+
+        }
+      },
     }
 </script>
 

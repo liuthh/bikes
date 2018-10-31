@@ -1,5 +1,5 @@
 <template>
-  <div class="aaa">
+  <!--<div class="aaa">-->
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -19,18 +19,18 @@
             <div class="col-md-12">
               <div class="choose"><img src="../assets/image/describe1.jpg" alt="">消光亮黑/荧光橙</div>
             </div>
-            <div class="col-md-12 describe4">库存剩余59辆</div>
+            <div class="col-md-12 describe4">库存剩余{{list.stock}}辆</div>
             <div class="col-md-12 describe5">
-              <div class="btn-group" role="group" aria-label="...">
-                <button type="button"><span class="glyphicon glyphicon-minus"></span></button>
-                <span>1</span>
-                <button type="button"><span class="glyphicon glyphicon-plus"></span></button>
+              <div class="count">
+                <div @click="Jian"><span>-</span></div>
+                <input type="text" @change="Inpu" v-model="num" ref="Input1" v-text="num">
+                <div @click="Jia"><span>+</span></div>
               </div>
             </div>
             <div class="col-md-12"><div class="line"></div></div>
             <div class="col-md-12">
-              <div class="btn btn-danger buy">立即购买</div>
-              <div class="btn  gwc">加入购物车</div>
+              <router-link :to="{name:'dindan',params:{bikes_id:id,numb:num}}"><div class="btn btn-danger buy">立即购买</div></router-link>
+             <div class="btn  gwc" @click="getBuycar">加入购物车</div>
             </div>
           </div>
           <!--<div class="col-md-1"></div>-->
@@ -40,7 +40,7 @@
         <div class="col-md-12"></div>
       </div>
     </div>
-  </div>
+  <!--</div>-->
 </template>
 
 <script>
@@ -49,9 +49,12 @@ export default {
   name: 'details',
   data() {
     return {
-      msg: '',
+      message: '',
       list:[],
       id:'',
+      add_id:'',
+      prices:'',
+      num:1,
     }
   },
   created: function () {
@@ -61,21 +64,59 @@ export default {
     this.getId();
   },
   methods: {
+    Inpu:function(){
+      this.prices=this.$refs.Input1.value*this.list.price;
+    },
+    Jia(){
+      this.num=this.$refs.Input1.value;
+      if (this.num<this.list.stock){
+        this.num++;
+        this.prices=this.num*this.list.price;
+        this.mobile=sessionStorage.getItem('mobile');
+      }
+    },
+    Jian() {
+      this.num = this.$refs.Input1.value;
+      if (this.num > 1) {
+        this.num--;
+        this.prices = this.num * this.list.price;
+      }
+    },
     getId: function () {
       let vm = this;
-      axios.get('http://127.0.0.1:5000/getSpDetial/' + '?spId=' + vm.id)//请求数据
+      axios.get('http://127.0.0.1:5000/genarateOrder/' + '?good_id=' + vm.id)//请求数据
         .then(res => {
           console.log(res);
           console.log(res.data);
           if (res.data.code === 305) {
             this.$router.push({path: '/login'})
           }
-          vm.list = res.data.good_imgs_dic;
+          vm.list = res.data.good_dic;
           vm.prices = res.data.good_dic.price;
-          vm.add = res.data.addresses_dic;
         })
         .catch(function (error) {
           console.log(error)
+        })
+    },
+    getBuycar:function () {
+      let buycar=new URLSearchParams();
+      buycar.append('goods_id',this.list.id);
+      axios.post('http://127.0.0.1:5000/aCart/',buycar,{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.code === 200) {
+            this.message="seccess";
+            console.log(this.message);
+          } else {
+            this.message=res.data.message
+          }
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
   }
@@ -84,30 +125,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-.detail-title{
-  height: 40px;
-  margin-top: 50px;
-  width: 100%;
-  /*background: #67b168;*/
-}
-
-  /*ul li{*/
-    /*display: inline;*/
-    /*line-height: 40px;*/
-    /*padding: 0;*/
-    /*margin-right: 10px;*/
-  /*}*/
-  .aaa{
-    background: white;
-  }
   .container{
     /*height: 800px;*/
     border-right: solid 1px #F2F2F2;
     width: 1170px;
     margin-top: 50px;
     padding-bottom: 10px;
-    /*background: white;*/
+    background: white;
+    min-height: 570px;
   }
   .col-md-12{
     width: 85%;
@@ -162,5 +187,20 @@ export default {
     margin-bottom: 0px;
     height: 40px;
     line-height: 25px;
+  }
+  .count{
+    display: flex;
+  }
+  .count>div{
+    width: 22px;
+    height: 26px;
+    background: lightgrey;
+    text-align: center;
+    line-height: 25px;
+  }
+  .count>input{
+    width: 42px;
+    height: 26px;
+    border: solid 1px #6C6C6C;
   }
 </style>

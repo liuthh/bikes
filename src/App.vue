@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container-fluid">
+  <div id="ap" class="container-fluid">
     <nav-index></nav-index>
     <div class="aaa">
       <router-view/>
@@ -14,12 +14,18 @@ export default {
 </script>
 
 <style>
-#app {
+#ap {
   margin: 0;
   padding: 0;
-  background: #f5f5f5;
+  /*background: #f5f5f5;*/
+  /*padding-bottom: 10px;*/
+  background: url("//gdp.alicdn.com/imgextra/i4/1810404213/TB27ilYdhuI.eBjy0FdXXXgbVXa-1810404213.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
 }
   .aaa{
-    min-height: 622px;
+    margin-top: 97px;
+    min-height: 575px;
   }
 </style>

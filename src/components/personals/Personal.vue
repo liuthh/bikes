@@ -7,9 +7,9 @@
       <!-------------------------------------------右侧主体---------------------------------------------->
 </template>
 <script>
-  import NavPersonal from '@/components/personal/NavPersonal'
+  import NavPersonal from '@/components/personals/NavPersonal'
     export default {
-        name: "Personal",
+        name: "personal",
       components:{
         NavPersonal,
       }

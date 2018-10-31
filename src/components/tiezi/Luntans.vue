@@ -1,11 +1,10 @@
 <template>
-<div>
+<div class="lt">
   <NavIndex></NavIndex>
   <Luntan></Luntan>
   <Lremen></Lremen>
 </div>
 </template>
-
 <script>
   import NavIndex from '@/components/NavIndex'
   import Luntan from '@/components/Luntan'
@@ -19,11 +18,10 @@
       }
     }
 </script>
-
 <style scoped>
- div{
+ .lt{
    overflow: hidden;
-   width: 980px;
+   width: 1080px;
    margin: auto;
  }
 </style>

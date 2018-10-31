@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Index from '@/components/Index'
 import Login from '@/components/Login'
+import LoginA from '@/components/LoginA'
 import Luntan from '@/components/Luntan'
 import Luntanxq from '@/components/Luntanxq'
 import Regist from '@/components/Regist'
@@ -11,11 +12,12 @@ import Dindan from '@/components/Dindan'
 import Luntans from '@/components/tiezi/Luntans'
 import Buycar from '@/components/Buycar'
 import Details from '@/components/Details'
-import Personal from '@/components/personal/Personal'
-import Myinfo from '@/components/personal/Myinfo'
-import Mypwd from '@/components/personal/Mypwd'
-import Myorder from '@/components/personal/Myorder'
-import Myaddress from '@/components/personal/Myaddress'
+import Personal from '@/components/personals/Personal'
+import Myinfo from '@/components/personals/Myinfo'
+import Mypwd from '@/components/personals/Mypwd'
+import Myorder from '@/components/personals/Myorder'
+import Myaddress from '@/components/personals/Myaddress'
+import Collect from '@/components/personals/Collect'
 Vue.use(Router);
 
 export default new Router({
@@ -37,11 +39,9 @@ export default new Router({
       component: Login
     },
     {
-      path: '/luntan',
-      name: 'luntan',
-      component: Luntan,children:[
-        {path: '', name: 'luntan', component: Luntan},
-      ]
+      path: '/logina',
+      name: 'logina',
+      component: LoginA
     },
     {
       path: '/luntanxq',
@@ -59,7 +59,7 @@ export default new Router({
       component: Search
     },
     {
-      path: '/dindan',
+      path: '/dindan/:bikes_id,:numb',
       name: 'dindan',
       component: Dindan
     },
@@ -74,7 +74,7 @@ export default new Router({
       component: Buycar
     },
     {
-      path: '/details',
+      path: '/details/:bikes_id',
       name: 'details',
       component: Details
     },
@@ -82,16 +82,12 @@ export default new Router({
       path: '/personal',
       name: 'personal',
       component: Personal,children:[
-        {path:'',name:'myinfo',component:Myinfo},
+        {path:'/',name:'myinfo',component:Myinfo},
         {path:'mypwd',name:'mypwd',component:Mypwd},
         {path:'myorder',name:'myorder',component:Myorder},
         {path:'myaddress',name:'myaddress',component:Myaddress},
+        {path:'collect',name:'collect',component:Collect},
       ]
-    },
-    {
-      path: '/myinfo',
-      name: 'myinfo',
-      component: Myinfo
     },
   ]
 })

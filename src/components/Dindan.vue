@@ -1,20 +1,56 @@
 <template>
   <div class="mnn">
+    <div class="cont" v-show="show">
+      <div class="container dindans">
+        <div class="row">
+          <div class="col-md-12 title1">
+            <span>确认订单信息</span>
+          </div>
+          <div class="col-md-12 title2">
+            <span>订单编号:1234567890</span>
+          </div>
+
+          <div class="col-md-12 title3">
+            <div class="col-md-2">
+              <img src="http://img.alicdn.com/imgextra/i1/820708319/TB2oqV1uStYBeNjSspkXXbU8VXa_!!820708319.jpg_100x100q90.jpg" alt="" style="height: 50px;width: 50px">
+            </div>
+            <div class="col-md-9">
+              <div class="col-md-12"><span>捷安特GIANT山地自行车</span></div>
+              <div class="col-md-12" style="color: silver">颜色：黑色</div>
+            </div>
+          </div>
+          <div class="col-md-12 title2">
+            <span>收货地址:江苏省 苏州市 吴中区 创意产业园4栋B202</span>
+          </div>
+          <div class="col-md-12 price">
+            <span>总计：628元</span>
+          </div>
+          <div class="col-md-12 con">
+            <input type="password" placeholder="请输入支付密码后确认">
+            <button><span>确认</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
-      <div class="row">
+      <div class="row main">
         <div class="col-md-12 add" >选择地址：</div>
         <div class="col-md-12">
-          <div class="col-md-3 dizhi" @click="did(addre.id)" v-for="addre in add" :data-addr_id="addre.id" ref="dataId">
-            <div class="col-md-12 shen" >{{addre.rcname}}</div>
+          <div class="col-md-3 dizhi"  @click="curIndex=index,add_id=addre.id" v-for="(addre,index) in add" :class="{ 'active':index===curIndex}">
+            <div class="col-md-12 shen">{{addre.rcname}}</div>
             <div class="col-md-12 xiangxi">
               <p>{{addre.rcaddress}}</p>
               <p>{{addre.rcmobile}}</p>
             </div>
           </div>
+          <div class="col-md-3 dizhi">
+            <!--<v-distpicker  :province="province" :city="city" :area="district" @province="onChangeProvince" @city="onChangeCity" @area="onChangeArea"></v-distpicker>-->
+            <p class="tianjia">添加地址</p>
+          </div>
         </div>
         <div class="col-md-offset-9 col-md-2 aa">管理地址收货地址</div>
       </div>
-      <div class="row">
+      <div class="row main">
         <div class="col-md-12 ma">订单详情</div>
         <div class="col-md-12 n">
           <div class="col-md-3">商品</div>
@@ -36,16 +72,16 @@
               <li>颜色：{{list.color}}</li>
             </ul>
           </div>
-          <div class="col-md-2" style="text-align: center"><p>{{list.price}}￥</p></div>
+          <div class="col-md-2" style="text-align: center"><p>￥{{list.price}}</p></div>
           <div class="col-md-2">
-            <div class="count" style="margin-left: 33px">
+            <div class="count">
               <div @click="Jian"><span>-</span></div>
               <input type="text" @change="Inpu" v-model="num" ref="Input1">
               <div @click="Jia"><span>+</span></div>
             </div>
           </div>
           <div class="col-md-2" style="color: red">
-            <p style="margin-left: 60px">{{prices}}￥</p>
+            <p style="margin-left: 60px">￥{{prices}}</p>
           </div>
         </div>
         <div class="col-md-offset-9 col-md-2 bb">
@@ -57,8 +93,10 @@
 </template>
 <script>
   import axios from 'axios';
-export default {
+  import VDistpicker from 'v-distpicker'
+  export default {
   name: 'dindan',
+    components:{VDistpicker},
   data () {
     return {
       // 订单信息
@@ -73,15 +111,36 @@ export default {
       prices:'',
       //购买数量
       num:1,
+      curIndex:'',
+      //省
+      province:'',
+    //  市
+      city:'',
+    //  区
+      district:'',
+      show:false,
     }
   },
   created:function () {
     this.id=this.$route.params.bikes_id;
+    this.num=this.$route.params.numb;
   },
   mounted:function(){
     this.getDd();
   },
   methods:{
+    onChangeProvince(data) {
+      this.province = data.value;
+      console.log(this.province);
+    },
+    onChangeCity(data) {
+      this.city = data.value;
+      console.log(this.city);
+    },
+    onChangeArea(data) {
+      this.district = data.value;
+      console.log(this.district);
+    },
     getDd:function () {
       let vm = this;
       axios.get('http://127.0.0.1:5000/genarateOrder/' +'?good_id='+vm.id)//请求数据
@@ -92,8 +151,9 @@ export default {
             this.$router.push({path: '/login'})
           }
           vm.list = res.data.good_dic;
-          vm.prices=res.data.good_dic.price;
+          // vm.prices=res.data.good_dic.price;
           vm.add = res.data.addresses_dic;
+          vm.prices=res.data.good_dic.price*vm.num;
         })
         .catch(function (error) {
           console.log(error)
@@ -116,22 +176,22 @@ export default {
         this.prices=this.num*this.list.price;
       }
     },
-    did(addr_id){
-      this.add_id=addr_id;
-    },
     Tijiao(){
       let vm=this;
+      this.show=true;
       let ti=new URLSearchParams();
       ti.append('good_id',this.id);
       ti.append('address_id',this.add_id);
       ti.append('price',this.prices);
       ti.append('number',this.num);
-      axios.post('http://127.0.0.1:5000/regist/',ti,{
+      axios.post('http://127.0.0.1:5000/genarateOrder/',ti,{
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
       })
+        .then(res=>{
 
+        })
     },
   }
 }
@@ -140,18 +200,27 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .mnn{
-    background: white;
-    min-height: 672px;
+    /*background: #F5F5F5;*/
+    min-height: 570px;
+    margin-top: 50px;
+    padding-bottom: 10px;
+    background: url("//gdp.alicdn.com/imgextra/i4/1810404213/TB27ilYdhuI.eBjy0FdXXXgbVXa-1810404213.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
   }
   .container{
-    /*background: white;*/
-    height: 100%;
+    background: white;
+    min-height: 560px;
+  }
+  .main{
+    margin-left: 30px;
   }
   .add{
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 10px;
   }
-  .col-md-12{
+  .container .col-md-12{
     width: 95%;
   }
   .list-unstyled li{
@@ -163,11 +232,23 @@ export default {
     vertical-align: top;
     position: relative;
     width: 237px;
-    height: 105px;
-    background: url(//img.alicdn.com/tps/i2/T1VPiBXvpeXXbjLKQ7-237-106.png) no-repeat;
+    height: 140px;
+    border: solid 1px gray;
     margin: 0 14px 14px 0;
     color: #666;
     cursor: pointer;
+  }
+  .xiangxi{
+    height: 80px;
+  }
+  .tianjia{
+    text-align: center;
+    margin-top: 55px;
+    font-size: 1.5em;
+    color: #CC9977;
+  }
+  .active{
+    border: solid 2px orange;
   }
   /*.dizhi:first-child{*/
     /*background-image: url(//img.alicdn.com/tfs/TB1OVRCRpXXXXaMXFXXXXXXXXXX-237-106.png);*/
@@ -221,6 +302,7 @@ export default {
   }
   .count{
     display: flex;
+    margin-left: 33px
   }
   .count>div{
     width: 22px;
@@ -240,6 +322,63 @@ export default {
     background: #FF0036;
     border: none;
     color: white;
-    margin-left: 36px;
+    margin-left: 30px;
+  }
+  .cont{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+  }
+  .cont .col-md-12{
+    width: 100% !important;
+  }
+  .cont .dindans{
+    margin-top: 10px;
+    width: 450px;
+    min-height: 400px !important;
+    border: 1px solid silver;
+    border-radius: 5px;
+
+  }
+  .cont .dindans .title1{
+    background: lightsalmon;
+    color: white;
+    font-size: 1.5em;
+    height: 45px;
+    line-height: 45px;
+  }
+  .cont .dindans .title2{
+    margin-top: 30px;
+  }
+  .cont .dindans .title3{
+    margin-top: 30px;
+    font-size: 0.8em;
+    padding: 0;
+  }
+  .cont .dindans .price{
+    font-size: 1.4em;
+    font-weight: bolder;
+    color: lightsalmon;
+    margin-top: 35px;
+  }
+  .cont .dindans .con{
+    margin-top: 60px;
+  }
+  .cont .dindans input{
+    height: 35px;
+    width: 80%;
+    border-radius: 5px;
+    border: 1px solid lightsalmon;
+
+  }
+  .cont .dindans button{
+    height: 35px;
+    width: 15%;
+    float: right;
+    border-radius: 5px;
+    background: lightsalmon;
+    color: white;
+    border: none;
   }
 </style>

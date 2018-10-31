@@ -8,14 +8,14 @@
             <img src="../../assets/image/login.jpg" alt="用户头像">
           </div>
           <div class="user_imformation">
-            <h5 class="user_name">刘帅</h5>
-            <p class="description">我要买买买！</p>
+            <h5 class="user_name">{{list.username}}</h5>
+            <p class="description">{{list.mobile}}</p>
           </div>
         </div>
       </div>
       <ul class="list-unstyled">
         <li class="current"><router-link to="/personal"><span>修改个人信息</span></router-link></li>
-        <li><router-link to="/personal/"><span>我的收藏</span></router-link></li>
+        <li><router-link to="/personal/collect"><span>我的收藏</span></router-link></li>
         <li><router-link to="/personal/myorder"><span>我的订单</span></router-link></li>
         <li><router-link to="/personal/myimg"><span>修改头像</span></router-link></li>
         <li><router-link to="/personal/myaddress"><span>收货地址</span></router-link></li>
@@ -25,8 +25,36 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
     name: "navpersonal",
+    data() {
+      return {
+        list:[],
+        msg:'',
+      }
+    },
+    created: function () {
+      this.getData();
+    },
+    methods: {
+      getData: function () {
+        let vm = this;
+        axios.get('http://127.0.0.1:5000/personal/')//请求数据
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+            if (res.data.code === 200) {
+              this.list = res.data.message
+            } else {
+              vm.msg = res.data.message;
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      },
+    },
   }
 </script>
 
@@ -75,7 +103,7 @@
   .user_photo {
     float: left;
     width: 50%;
-    height: 100px;
+    height: 108px;
     border: 1px solid #ddd;
     border-radius: 50%;
     margin-bottom: 15px;

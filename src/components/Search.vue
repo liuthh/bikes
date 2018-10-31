@@ -74,7 +74,7 @@
             </div>
             <div class="col-md-12 buy">
               <p class="price">{{bikes.price}}元</p>
-              <router-link :to="{name: 'dindan', params: { bikes_id: bikes.id}}"><button type="button" class="btn btn-danger">立即购买</button></router-link>
+              <router-link :to="{name: 'dindan', params: { bikes_id: bikes.id,numb:1}}"><button type="button" class="btn btn-danger">立即购买</button></router-link>
             </div>
           </div>
         </div>
@@ -185,7 +185,7 @@
     background-color: white;
   }
   .con{
-    margin-top: 50px;
+    margin-top: 60px;
     background: url("//gdp.alicdn.com/imgextra/i4/1810404213/TB27ilYdhuI.eBjy0FdXXXgbVXa-1810404213.jpg");
     background-repeat: no-repeat;
     background-position: center top;
