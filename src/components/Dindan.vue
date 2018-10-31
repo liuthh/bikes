@@ -4,10 +4,11 @@
       <div class="container dindans">
         <div class="row">
           <div class="col-md-12 title1">
-            <span>确认订单信息</span>
+            <div class="col-md-11"><span>确认订单信息</span></div>
+            <div class="col-md-1" @click="down">X</div>
           </div>
           <div class="col-md-12 title2">
-            <span>订单编号:1234567890</span>
+            <span>订单编号:{{order.id}}</span>
           </div>
 
           <div class="col-md-12 title3">
@@ -15,19 +16,19 @@
               <img src="http://img.alicdn.com/imgextra/i1/820708319/TB2oqV1uStYBeNjSspkXXbU8VXa_!!820708319.jpg_100x100q90.jpg" alt="" style="height: 50px;width: 50px">
             </div>
             <div class="col-md-9">
-              <div class="col-md-12"><span>捷安特GIANT山地自行车</span></div>
-              <div class="col-md-12" style="color: silver">颜色：黑色</div>
+              <div class="col-md-12"><span>{{order.goodsName}}</span></div>
+              <div class="col-md-12" style="color: silver">颜色：{{list.color}}</div>
             </div>
           </div>
           <div class="col-md-12 title2">
-            <span>收货地址:江苏省 苏州市 吴中区 创意产业园4栋B202</span>
+            <span>收货地址:{{address}}</span>
           </div>
           <div class="col-md-12 price">
-            <span>总计：628元</span>
+            <span>总计：{{prices}}元</span>
           </div>
           <div class="col-md-12 con">
-            <input type="password" placeholder="请输入支付密码后确认">
-            <button><span>确认</span></button>
+            <input type="password" v-model="password">
+            <button @click="orders"><span>确认</span></button>
           </div>
         </div>
       </div>
@@ -36,7 +37,7 @@
       <div class="row main">
         <div class="col-md-12 add" >选择地址：</div>
         <div class="col-md-12">
-          <div class="col-md-3 dizhi"  @click="curIndex=index,add_id=addre.id" v-for="(addre,index) in add" :class="{ 'active':index===curIndex}">
+          <div class="col-md-3 dizhi"  @click="curIndex=index,add_id=addre.id,address=addre.rcaddress" v-for="(addre,index) in add" :class="{ 'active':index===curIndex}">
             <div class="col-md-12 shen">{{addre.rcname}}</div>
             <div class="col-md-12 xiangxi">
               <p>{{addre.rcaddress}}</p>
@@ -103,14 +104,20 @@
       list:[],
       //地址信息
       add:[],
+      //订单信息
+      order:[],
       //商品id
       id: '',
       //地址id
       add_id:'',
+      address:'',
       //商品总价
       prices:'',
       //购买数量
       num:1,
+      //密码
+      password:'',
+      //地址选择
       curIndex:'',
       //省
       province:'',
@@ -119,6 +126,7 @@
     //  区
       district:'',
       show:false,
+      msg:'',
     }
   },
   created:function () {
@@ -151,7 +159,6 @@
             this.$router.push({path: '/login'})
           }
           vm.list = res.data.good_dic;
-          // vm.prices=res.data.good_dic.price;
           vm.add = res.data.addresses_dic;
           vm.prices=res.data.good_dic.price*vm.num;
         })
@@ -177,7 +184,6 @@
       }
     },
     Tijiao(){
-      let vm=this;
       this.show=true;
       let ti=new URLSearchParams();
       ti.append('good_id',this.id);
@@ -190,9 +196,45 @@
         }
       })
         .then(res=>{
-
+          console.log(res);
+          console.log(res.data);
+          if(res.data.code===305){
+            this.$router.push({path: '/login'})
+          } else {
+            this.order = res.data.order;
+            this.msg = res.data.message;
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
         })
     },
+    orders(){
+      let ord=new URLSearchParams();
+      ord.append('passwd',this.password);
+      ord.append('order_code',this.order.id);
+      axios.post('http://127.0.0.1:5000/referOrder/',ord,{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      })
+        .then(res=>{
+          console.log(res);
+          console.log(res.data);
+          if(res.data.code===200){
+            alert(res.data.message);
+            this.show=false;
+          } else{
+            alert(res.data.message);
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    down(){
+      this.show=false;
+    }
   }
 }
 </script>
@@ -250,9 +292,6 @@
   .active{
     border: solid 2px orange;
   }
-  /*.dizhi:first-child{*/
-    /*background-image: url(//img.alicdn.com/tfs/TB1OVRCRpXXXXaMXFXXXXXXXXXX-237-106.png);*/
-  /*}*/
   .shen{
     width: 100%;
     border-bottom: 1px solid #f2f2f2;
@@ -286,7 +325,6 @@
   .n{
     margin-bottom: 50px;
   }
-
   .nx>div{
     height: 74px;
     border-top: solid 1px #B2D1FF;
@@ -302,7 +340,8 @@
   }
   .count{
     display: flex;
-    margin-left: 33px
+    margin-left: 33px;
+    background: white;
   }
   .count>div{
     width: 22px;

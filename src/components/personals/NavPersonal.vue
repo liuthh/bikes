@@ -8,18 +8,18 @@
             <img src="../../assets/image/login.jpg" alt="用户头像">
           </div>
           <div class="user_imformation">
-            <h5 class="user_name">{{list.username}}</h5>
+            <h4 class="user_name">{{list.username}}</h4>
             <p class="description">{{list.mobile}}</p>
           </div>
         </div>
       </div>
       <ul class="list-unstyled">
-        <li class="current"><router-link to="/personal"><span>修改个人信息</span></router-link></li>
-        <li><router-link to="/personal/collect"><span>我的收藏</span></router-link></li>
+        <!--<li><router-link to="/personal/collect"><span>我的收藏</span></router-link></li>-->
         <li><router-link to="/personal/myorder"><span>我的订单</span></router-link></li>
-        <li><router-link to="/personal/myimg"><span>修改头像</span></router-link></li>
         <li><router-link to="/personal/myaddress"><span>收货地址</span></router-link></li>
+        <li><router-link to="/personal/myimg"><span>修改头像</span></router-link></li>
         <li><router-link to="/personal/mypwd"><span>修改密码</span></router-link></li>
+        <li class="current"><router-link to="/personal"><span>修改个人信息</span></router-link></li>
       </ul>
     </div>
   </div>
@@ -47,6 +47,7 @@
             if (res.data.code === 200) {
               this.list = res.data.message
             } else {
+              this.$router.push({path: '/login'});
               vm.msg = res.data.message;
             }
           })

@@ -86,7 +86,7 @@ export default {
         if (way===0){
           item.number++;
           if (item.number>item.sales){
-            item.number=item.sales;
+            item.number=item.stock;
           }
         }else {
           item.number--;

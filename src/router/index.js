@@ -4,7 +4,6 @@ import HelloWorld from '@/components/HelloWorld'
 import Index from '@/components/Index'
 import Login from '@/components/Login'
 import LoginA from '@/components/LoginA'
-import Luntan from '@/components/Luntan'
 import Luntanxq from '@/components/Luntanxq'
 import Regist from '@/components/Regist'
 import Search from '@/components/Search'
@@ -54,7 +53,7 @@ export default new Router({
       component: Regist
     },
     {
-      path: '/search',
+      path: '/search/',
       name: 'search',
       component: Search
     },

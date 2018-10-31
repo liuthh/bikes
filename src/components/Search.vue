@@ -9,7 +9,7 @@
               <li>详细搜索</li>
             </ul>
           </div>
-          <div class="col-md-12 search-content">
+          <div class="col-md-12 search-content" v-show="car">
             <!--<div class="col-md-1 search-content-title">自行车:</div>-->
             <ul class="list-inline">
               <li class="a">自行车类：</li>
@@ -21,7 +21,7 @@
               <li class="c"><a href="#">城市休闲车</a></li>
             </ul>
           </div>
-          <div class="col-md-12 search-content">
+          <div class="col-md-12 search-content" v-show="person">
             <!--<div class="col-md-1 search-content-title">车身商品:</div>-->
             <ul class="list-inline">
               <li class="a">人身商品：</li>
@@ -37,11 +37,11 @@
 
             </ul>
           </div>
-          <div class="col-md-12 search-content di">
+          <div class="col-md-12 search-content di" v-show="bodywork">
             <!--<div class="col-md-1 search-content-title ">人身商品:</div>-->
             <ul class="list-inline">
               <li class="a">车身商品：</li>
-              <li class="b">所有</li>
+              <li class="b"><a href="#">所有</a></li>
               <li class="c"><a href="#">码表</a></li>
               <li class="c"><a href="#">水壶</a></li>
               <li class="c"><a href="#">车灯</a></li>
@@ -79,6 +79,11 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <page-index :count="pagesize" @indexclick="getIndex" v-show="pagesize>1"></page-index>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -89,20 +94,25 @@
     // props :['condition'],
     data () {
         return {
+          //搜索信息
           condition: '',
           pageindex: 1,
           list: [],
-          pagesize: 0,
+          pagesize:5,
           msg:'',
           paixu:1,
+
+          car:true,
+          person:true,
+          bodywork:true,
         }
     },
     created:function () {
-      // this.msg=this.$route.params.id
+      // this.msg=this.$route.params.name;
+      // console.log(this.mag);
     },
     mounted: function () {
       this.getData();
-      // this.getPageSize();
     },
     methods:{
       jpaixu:function(){
@@ -126,20 +136,9 @@
             console.log(error)
           })
       },
-      getPageSize: function () {
-        let vm = this;
-        axios.get('http://127.0.0.1:5000/getspDetial/' +'?page='+vm.condition+ '&content=' + vm.msg + '/')
-          .then(function (response) {
-            vm.pagesize = Math.ceil(response.data.acount / 20);
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      },
       searchData: function () {
         this.pageindex = 1;
         this.getData();
-        this.getPageSize();
       },
       getIndex: function (i) {
         this.pageindex = i;

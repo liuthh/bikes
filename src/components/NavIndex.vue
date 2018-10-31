@@ -59,10 +59,10 @@
           <ul class="nav navbar-nav">
             <li><router-link to="/">首页</router-link></li>
             <li><router-link to="/search">全部分类</router-link></li>
-            <li><router-link :to="{name:'search'}">自行车</router-link></li>
-            <li><router-link to="/search">人身商品</router-link></li>
-            <li><router-link to="/search">车身商品</router-link></li>
-            <li><router-link to="/luntans">论坛</router-link></li>
+            <li><router-link :to="{name:'search',params:{name:'自行车'}}">自行车</router-link></li>
+            <li><router-link :to="{name:'search',params:{name:'人身商品'}}">人身商品</router-link></li>
+            <li><router-link :to="{name:'search',params:{name:'车身商品'}}">车身商品</router-link></li>
+            <!--<li><router-link to="/luntans">论坛</router-link></li>-->
           </ul>
         </div>
       </div>
@@ -76,13 +76,13 @@ export default {
   data () {
     return {
       msg: '',
-      login_flag:true,
+      login_flag:false,
     }
   },
   created: function () {
-    if(sessionStorage.getItem('mobile')!==''){
+    if(sessionStorage.getItem('mobile')!=='' && sessionStorage.getItem('mobile')!==null){
       this.msg=sessionStorage.getItem('mobile');
-      // console.log(sessionStorage.getItem('mobile'));
+      console.log(sessionStorage.getItem('mobile'));
       this.login_flag=true;
     }else {
       this.login_flag=false;
