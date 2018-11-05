@@ -14,41 +14,51 @@
           <li><p>序号</p></li>
           <li><p>订单编号</p></li>
           <li><p>订单名称</p></li>
-          <li><p>单价</p></li>
           <li><p>数量</p></li>
           <li><p>总价</p></li>
           <li><p>支付状态</p></li>
         </ul>
       </div>
-      <div class="list">
+      <div class="list" v-for="(item,index) in list">
         <ul>
-          <li><p>1</p></li>
-          <li><p>10001820</p></li>
+          <li><p>{{index}}</p></li>
+          <li><p>{{item.id}}</p></li>
           <li>
             <div class="img_name">
-              <p>XXX自行车</p>
+              <p>{{item.goodsName}}自行车</p>
             </div>
           </li>
-          <li><p>￥1800</p></li>
-          <li><p>3</p></li>
-          <li><p>5400</p></li>
-          <li><p>已付清</p></li>
+          <li><p>{{item.number}}</p></li>
+          <li><p>￥{{item.goods_price}}</p></li>
+          <li><p>{{item.status}}</p></li>
         </ul>
       </div>
     </div>
-
-
   </div>
 </template>
-
 <script>
+  import axios from 'axios'
     export default {
       name: "myorder",
       data(){
         return{
+          list:[],
 
         }
       },
+      mounted:function(){
+        this.getData();
+      },
+      methods:{
+        getData:function () {
+          axios.get('http://127.0.0.1:5000/myOrder/')
+            .then(res=>{
+              console.log(res);
+              console.log(res.data);
+              this.list=res.data.message;
+            })
+        }
+      }
 
     }
 </script>

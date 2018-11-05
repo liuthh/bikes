@@ -7,7 +7,7 @@
           <label>昵称</label>
         </div>
         <div class="col-md-6">
-          <input type="text" v-model="name">
+          <input type="text" v-model.trim="name">
         </div>
       </div>
       <div class="col-md-12 main">
@@ -15,36 +15,20 @@
           <label>邮箱</label>
         </div>
         <div class="col-md-6">
-          <input type="text" v-model="email">
+          <input type="text" v-model.trim="email">
         </div>
       </div>
       <div class="col-md-12 main">
         <div class="col-md-offset-1 col-md-2">
-          <label>手机号</label>
+          <label>签名</label>
         </div>
         <div class="col-md-6">
-          <input type="text" v-model="mobile">
-        </div>
-      </div>
-      <div class="col-md-12 main">
-        <div class="col-md-offset-1 col-md-2">
-          <label>真实姓名</label>
-        </div>
-        <div class="col-md-6">
-          <input type="text" v-model="username">
-        </div>
-      </div>
-      <div class="col-md-12 main">
-        <div class="col-md-offset-1 col-md-2">
-          <label>身份证号码</label>
-        </div>
-        <div class="col-md-6">
-          <input type="text" v-model="identity">
+          <input type="text" v-model.trim="intr">
         </div>
       </div>
       <div class="col-md-12">
         <div class="col-md-offset-3 col-md-2">
-          <button @click="tijiao">确认修改</button>
+          <button @click="upData">确认修改</button>
         </div>
       </div>
     </div>
@@ -60,40 +44,29 @@
             msg:'',
             //昵称
             name:'',
-          //  手机号
-            mobile:'',
+          //  签名
+            intr:'',
           //  邮箱
             email:'',
-          //  真实姓名
-            username:'',
-          //  身份证号
-            identity:'',
-            list:[],
           }
       },
-      created:function () {
-        this.getData();
-      },
       methods:{
-        getData:function () {
-          let vm = this;
-          axios.get('http://127.0.0.1:5000/personal/')//请求数据
-            .then(res => {
-              console.log(res);
-              console.log(res.data);
-              if (res.data.code === 200) {
-                this.list=res.data.message
-              } else {
-                vm.msg= res.data.message;
+          upData:function () {
+            let per=new URLSearchParams();
+            per.append('username',this.name);
+            per.append('intr',this.intr);
+            per.append('email',this.email);
+            axios.post('http://127.0.0.1:5000/upPersonal/',per,{
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
               }
             })
-            .catch(function (error) {
-              console.log(error)
-            })
-        },
-        tijiao:function () {
-
-        }
+              .then(res=>{
+                if (res.data.code===200) {
+                  alert(res.data.message)
+                }
+              })
+          }
       }
     }
 </script>
@@ -118,7 +91,6 @@
   .main{
     margin-top: 20px;
   }
-
   label{
     width: 100%;
     text-align: right;

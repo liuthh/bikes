@@ -86,6 +86,7 @@
               if (res.data.code===200){
                 this.message=res.data.message;
                 alert(this.message);
+                this.$router.push({path: '/login'})
               }else if (res.data.code===305) {
                 this.$router.push({path: '/login'})
               }else if (res.data.code===401) {

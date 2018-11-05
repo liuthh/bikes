@@ -13,35 +13,29 @@
             <!--<div class="col-md-1 search-content-title">自行车:</div>-->
             <ul class="list-inline">
               <li class="a">自行车类：</li>
-              <li class="c" v-for="(item,index) in car">
-                <router-link :to="{name:'searchcar',params:{name:item.id,goodT_index:index,type:1}}">{{item.name}}</router-link></li>
+              <li class="c" v-for="(item,index) in cars" @click="Car(item.id,index,1)" :class="{'b':index=car_index}">{{item.name}}</li>
             </ul>
           </div>
           <div class="col-md-12 search-content">
+            <!--<div class="col-md-1 search-content-title">车身商品:</div>-->
             <ul class="list-inline">
               <li class="a">人身商品：</li>
-              <li class="c" v-for="(item,index) in person">
-                <router-link :to="{name:'searchcar',params:{name:item.id,goodT_index:index,type:2}}">{{item.name}}</router-link></li>
+              <li class="c" v-for="(item,index) in person" @click="Car(item.id,index,2)" :class="{'b':index=person_index}">
+                {{item.name}}</li>
+
             </ul>
           </div>
           <div class="col-md-12 search-content di">
             <!--<div class="col-md-1 search-content-title ">人身商品:</div>-->
             <ul class="list-inline">
               <li class="a">车身商品：</li>
-              <li class="c" v-for="(item,index) in bodywork">
-                <router-link :to="{name:'searchcar',params:{name:item.id,goodT_index:index,type:3}}">{{item.name}}</router-link></li>
+              <li class="c" v-for="(item,index) in bodywork" @click="Car(item.id,index,3)" :class="{'b':index=body_index}">
+                {{item.name}}</li>
             </ul>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <ul class="nav nav-tabs bb">
-            <li role="presentation" @click.prevent.stop="jpaixu"><a href="#">价格排序</a></li>
-            <li role="presentation" @click.prevent.stop="xpaixu"><a href="#">销量排序</a></li>
-            <!--<li role="presentation" @click.prevent.stop="spaixu"><a href="#">上架时间排序</a></li>-->
-          </ul>
-        </div>
         <div class="col-md-3 good" v-for="bikes in list" :key="bikes.id">
           <div class="goods">
             <div class="col-md-12"><img :src="bikes.main_img" alt=""></div>
@@ -69,7 +63,7 @@
 <script>
   import axios from 'axios';
   export default {
-    name: 'search',
+    name: 'searchcar',
     // props :['condition'],
     data () {
         return {
@@ -78,55 +72,59 @@
           pageIndex: 1,
           list: [],
           pagesize:1,
-          msg:'',
+          good_id:'',
           paixu:1,
           alllenght:0,
 
-          car:[],
-          car_index:'',
+          cars:[],
+          car_index:0,
           person:[],
           person_index:'',
           bodywork:[],
           body_index:'',
-          good_id:'',
         }
     },
     created:function () {
-      // this.msg=this.$route.params.name;
-      // console.log(this.mag);
+      let _this=this;
+      this.good_id=_this.$route.params.name;
+      console.log(_this.$route.params.type);
+      console.log(this.$route.params.goodT_index);
+      if (this.$route.params.type===1){
+        this.car_index=_this.$route.params.goodT_index;
+      } else if (this.$route.params.type===2){
+        this.person_index=_this.$route.params.goodT_index;
+      } else {
+        this.body_index=_this.$route.params.goodT_index;
+      }
     },
     mounted: function () {
       this.getData();
       this.getType();
     },
     methods:{
+      Car(goods_id,index,type){
+        this.car_index=index;
+        this.good_id=goods_id;
+        this.getData();
+      },
       getType:function(){
         axios.get('http://127.0.0.1:5000/get_goods_type/')
           .then(res=>{
             console.log(res);
             console.log(res.data);
-            this.car=res.data.types[2];
+            this.cars=res.data.types[2];
             this.person=res.data.types[0];
             this.bodywork=res.data.types[1];
-            console.log(res.data.types[1]);
           })
       },
-      jpaixu:function(){
-        this.paixu=2;
-        this.getData();
-      },
-      xpaixu:function(){
-        this.paixu=3;
-        this.getData();
-      },
       getData: function () {
-        let vm = this;
-        axios.get('http://127.0.0.1:5000/searchShop/' +'?page='+vm.pageIndex + '&content=' + vm.msg+'&sort='+vm.paixu)//请求数据 pageindex页数 condition条件、关键字
-          .then(res => {
-            console.log(res);
+        let vm=this;
+        axios.get('http://127.0.0.1:5000/getTypeGoods/'+'?type_id='+vm.good_id+'&page='+vm.pageIndex)
+          .then(res=>{
             console.log(res.data);
-            vm.list = res.data.message;
-            this.pagesize=res.data.page.page;
+            console.log(res.data.message);
+            this.list=res.data.message;
+            this.pagesize=res.data.page;
           })
           .catch(function (error) {
             console.log(error)
@@ -147,10 +145,10 @@
   .b{
     color: #FF6000;
   }
-  .c a{
+  .c{
     color: black;
   }
-  .c a:hover{
+  .c:hover{
     color: #FF6000;
   }
   .search-content{

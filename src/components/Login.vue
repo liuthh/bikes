@@ -9,7 +9,7 @@
       <div class="login-left fl">
         <ul>
           <li id="common-login-title" class="cur">账号密码登录</li>
-          <li id="verify-login-title">手机短信验证码登录</li>
+          <!--<li id="verify-login-title">手机短信验证码登录</li>-->
         </ul>
         <div class="log-main clear">
           <!--普通登录-->

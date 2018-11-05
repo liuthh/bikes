@@ -5,7 +5,7 @@
         <div class="col-md-12">
           <div class="col-md-5" style="margin-top: 30px">
             <div class="col-md-12 picture">
-              <img src="../assets/image/detail.jpg" alt="">
+              <img :src="list.main_img" alt="">
             </div>
           </div>
           <div class="col-md-7 describe" style="margin-top: 30px">
@@ -15,9 +15,9 @@
             <div class="col-md-12 describe2">【破损补寄】【无理由退换货】【包邮】</div>
             <div class="col-md-12 describe3">￥{{list.price}}</div>
             <div class="col-md-12"><div class="line"></div></div>
-            <div class="col-md-12 " style="font-size: 1.1em">颜色</div>
+            <div class="col-md-12 col">颜色</div>
             <div class="col-md-12">
-              <div class="choose"><img src="../assets/image/describe1.jpg" alt="">消光亮黑/荧光橙</div>
+              <div class="choose"><img :src="list.main_img" alt="">{{list.color}}</div>
             </div>
             <div class="col-md-12 describe4">库存剩余{{list.stock}}辆</div>
             <div class="col-md-12 describe5">
@@ -46,7 +46,7 @@
 <script>
   import axios from 'axios'
 export default {
-  name: 'details',
+  name: 'detail',
   data() {
     return {
       message: '',
@@ -84,15 +84,14 @@ export default {
     },
     getId: function () {
       let vm = this;
-      axios.get('http://127.0.0.1:5000/genarateOrder/' + '?good_id=' + vm.id)//请求数据
+      axios.get('http://127.0.0.1:5000/getSpDetial/' + '?spId=' + vm.id)//请求数据
         .then(res => {
           console.log(res);
           console.log(res.data);
-          if (res.data.code === 305) {
-            this.$router.push({path: '/login'})
+          if (res.data.code === 200) {
+            vm.list = res.data.good;
+            vm.prices = res.data.good.price;
           }
-          vm.list = res.data.good_dic;
-          vm.prices = res.data.good_dic.price;
         })
         .catch(function (error) {
           console.log(error)
@@ -101,6 +100,7 @@ export default {
     getBuycar:function () {
       let buycar=new URLSearchParams();
       buycar.append('goods_id',this.list.id);
+      buycar.append('number',this.num);
       axios.post('http://127.0.0.1:5000/aCart/',buycar,{
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
@@ -164,8 +164,11 @@ export default {
   .line{
     height: 1px;
     background: #a0a0a0;
-
   }
+  .col{
+    font-size: 1.1em
+  }
+
   .choose{
     height: 40px;
     border: 1px solid dimgrey;
@@ -174,6 +177,10 @@ export default {
     margin-right: 10px;
     border-radius: 4px;
     background: white;
+  }
+  .choose img{
+    width: 40px;
+    height: 40px;
   }
   .gwc{
     border: 1px solid black;

@@ -5,7 +5,7 @@
       <div class="user_show">
         <div class="user_photo_box">
           <div class="user_photo">
-            <img src="../../assets/image/login.jpg" alt="用户头像">
+            <img :src="list.avatar" alt="用户头像">
           </div>
           <div class="user_imformation">
             <h4 class="user_name">{{list.username}}</h4>
@@ -15,11 +15,12 @@
       </div>
       <ul class="list-unstyled">
         <!--<li><router-link to="/personal/collect"><span>我的收藏</span></router-link></li>-->
+        <li><router-link to="/personal"><span>个人信息</span></router-link></li>
         <li><router-link to="/personal/myorder"><span>我的订单</span></router-link></li>
         <li><router-link to="/personal/myaddress"><span>收货地址</span></router-link></li>
         <li><router-link to="/personal/myimg"><span>修改头像</span></router-link></li>
         <li><router-link to="/personal/mypwd"><span>修改密码</span></router-link></li>
-        <li class="current"><router-link to="/personal"><span>修改个人信息</span></router-link></li>
+        <li><router-link to="/personal/myinfo"><span>修改个人信息</span></router-link></li>
       </ul>
     </div>
   </div>

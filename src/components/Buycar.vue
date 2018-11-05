@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-4 a">
           <div class="col-md-3 ">
-            <img src="../assets/image/gwc.jpg" alt="">
+            <img :src="item.main_img" alt="">
           </div>
           <div class="col-md-9 ">
             <div class="col-md-12"><span>{{item.title}}</span></div>
@@ -35,7 +35,7 @@
           <button type="button" @click="pageMony(item,0)"><span>+</span></button>
         </div>
         <div class="col-md-2 prices">￥{{item.number*item.price}}</div>
-        <div class="col-md-1 operation" @click="deleteOne(index)">删除</div>
+        <div class="col-md-1 operation" @click="deleteOne(index,item.id)">删除</div>
       </div>
       <div class="col-md-12 count">
         <div class="col-md-2">
@@ -43,7 +43,7 @@
         </div>
         <!--<div class="col-md-1" @click="deleteSome">删除</div>-->
         <div class="col-md-2 pay">
-          <router-link :to="{name:''}"><button>结 算</button></router-link>
+          <button @click="jiesuan">结 算</button>
         </div>
         <div class="col-md-1 price-all">￥{{prices}}</div>
         <div class="col-md-1 count-all">合计：</div>
@@ -62,6 +62,9 @@ export default {
       goods: [],
       list: [],
       checkAllId:[],
+      good:[],
+      goods_id:[],
+      goods_num:[],
       id: '',
       good_id: '',
       prices: 0,
@@ -79,15 +82,29 @@ export default {
     });
   },
     methods: {
-      deleteOne:function(index){
+      deleteOne:function(index,item_id){
         this.goods.splice(index,1);
+        let del=new URLSearchParams();
+        del.append('good_id',item_id);
+        console.log(item_id);
+        del.append('types',0);
+        console.log(del);
+        axios.post('http://127.0.0.1:5000/delGoods/',del,{
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        })
+          .then(res=>{
+            console.log(res);
+            console.log(res.data);
+            if(res.data.code===200){
+
+            }
+          })
       },
       pageMony:function(item,way){
         if (way===0){
-          item.number++;
-          if (item.number>item.sales){
-            item.number=item.stock;
-          }
+            item.number++;
         }else {
           item.number--;
           if (item.number<1){
@@ -99,7 +116,7 @@ export default {
       checkAll (val) {
         this.checkAllId = [];
         this.goods.forEach(item => {
-          item.checked = val
+          item.checked = val;
         });
         if (val) {
           this.goods.forEach(item => {
@@ -122,7 +139,7 @@ export default {
         }
         // 如果被点击则存其id
         if (item.checked) {
-          this.checkAllId.push(item.id)
+          this.checkAllId.push(item.id);
         } else {
           // 删除数组里取消选择的id
           for (let i = 0; i < this.checkAllId.length; i++) {
@@ -157,10 +174,23 @@ export default {
             console.log(error)
           })
       },
+      jiesuan:function (){
+        this.goods.forEach(item => {
+          if (item.checked ===true) {
+            // this.$data.good.push({g_id:item.id,g_num:item.number});
+            this.$data.good.push(item);
+            console.log(this.good);
+          }
+        });
+        this.$router.push({
+          name:'dindans',
+          params:{
+            'info':this.good,
+            'prices':this.prices,
+          },
+        })
+      }
     },
-  computed: {
-
-  }
 }
 </script>
 
@@ -264,5 +294,9 @@ export default {
   .choose{
     float: right;
     text-align: right;
+  }
+  img{
+    width: 70px;
+    height: 70px;
   }
 </style>

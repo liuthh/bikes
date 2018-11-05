@@ -10,16 +10,16 @@
         <div class="log-main clear">
           <!--验证码注册-->
           <div class="yzm-login">
-            <input @change="checkmobile" v-model="mobile" id="phone" class="yzm-mobble fl" type="text" placeholder="请输入手机号" name="mobble">
+            <input @change="checkmobile" v-model.trim="mobile" id="phone" class="yzm-mobble fl" type="text" placeholder="请输入手机号" name="mobble">
             <span class="mobile_verify">{{msmobile}}</span>
             <button @click="Zhuce" class="fr" id="zc">{{contents}}</button>
           </div>
           <!--验证码注册结束-->
           <div>
-            <input  v-model="code" type="text" placeholder="请输入短信验证码">
+            <input  v-model.trim="code" type="text" placeholder="请输入短信验证码">
           </div>
           <div style="position: relative">
-            <input @change="checkname" v-model="username" type="text" placeholder="请输入2到16个字的昵称">
+            <input @change="checkname" v-model.trim="username" type="text" placeholder="请输入2到16个字的昵称">
             <span class="mobile_verify">{{msname}}</span>
           </div>
           <div style="position: relative">
@@ -174,7 +174,7 @@ export default {
           console.log(res);
           if (res.data.code === 200) {
             this.message="seccess";
-            this.$router.push({path: '/'})
+            this.$router.push({path: '/login'})
           } else {
             this.message=res.data.message;
           }

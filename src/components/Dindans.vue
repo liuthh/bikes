@@ -7,17 +7,8 @@
             <div class="col-md-11"><span>确认订单信息</span></div>
             <div class="col-md-1" @click="down">X</div>
           </div>
-          <div class="col-md-12 title2">
-            <span>订单编号:{{order.id}}</span>
-          </div>
-          <div class="col-md-12 title3">
-            <div class="col-md-2">
-              <img :src="list.main_img" alt="" style="height: 50px;width: 50px">
-            </div>
-            <div class="col-md-9">
-              <div class="col-md-12"><span>{{order.goodsName}}</span></div>
-              <div class="col-md-12" style="color: silver">颜色：{{list.color}}</div>
-            </div>
+          <div class="col-md-12 title2" v-for="orde in order">
+            <span>订单编号:{{orde.id}}</span>
           </div>
           <div class="col-md-12 title2">
             <span>收货地址:{{address}}</span>
@@ -55,33 +46,36 @@
           <div class="col-md-2">数量</div>
           <div class="col-md-2">小计</div>
         </div>
-        <div class="col-md-12 nx">
+        <div class="col-md-12 nx" v-for="item in goods">
           <div class="col-md-3">
-            <div class="col-md-4"><img :src="list.main_img" alt=""></div>
+            <div class="col-md-4"><img :src="item.main_img" alt=""></div>
             <div class="col-md-8">
-              <p>{{list.title}}</p>
+              <p>{{item.title}}</p>
             </div>
           </div>
           <div class="col-md-2">
             <ul class="list-unstyled">
-              <li>品牌：{{list.brand}}</li>
-              <li>颜色：{{list.color}}</li>
+              <li>品牌：{{item.brand}}</li>
+              <li>颜色：{{item.color}}</li>
             </ul>
           </div>
-          <div class="col-md-2" style="text-align: center"><p>￥{{list.price}}</p></div>
+          <div class="col-md-2" style="text-align: center"><p>￥{{item.price}}</p></div>
           <div class="col-md-2">
             <div class="count">
-              <div @click="Jian"><span>-</span></div>
-              <input type="text" @change="Inpu" v-model="num" ref="Input1">
-              <div @click="Jia"><span>+</span></div>
+              <p>{{item.number}}</p>
             </div>
           </div>
           <div class="col-md-2" style="color: red">
-            <p style="margin-left: 60px">￥{{prices}}</p>
+            <p style="margin-left: 60px">￥{{item.number*item.price}}</p>
           </div>
         </div>
-        <div class="col-md-offset-9 col-md-2 bb">
-          <button @click="Tijiao">提交订单</button>
+        <div class="col-md-12">
+          <div class="col-md-offset-9 col-md-1 prices">
+            <span>￥{{prices}}</span>
+          </div>
+          <div class="col-md-2 bb">
+            <button @click="Tijiao">提交订单</button>
+          </div>
         </div>
       </div>
     </div>
@@ -90,15 +84,23 @@
 <script>
   import axios from 'axios';
   export default {
-  name: 'dindan',
+  name: 'dindans',
   data () {
     return {
+      //接收路由传递的数据
+      goods:[],
+      //提交的数据
+      good:[],
       // 订单信息
       list:[],
       //地址信息
       add:[],
       //订单信息
       order:[],
+      //订单号
+      order_id:[],
+      //提交多个订单
+      orderss:[],
       //商品id
       id: '',
       //地址id
@@ -117,55 +119,29 @@
     }
   },
   created:function () {
-    this.id=this.$route.params.bikes_id;
-    this.num=this.$route.params.numb;
+    this.goods=this.$route.params.info;
+    this.prices=this.$route.params.prices;
   },
   mounted:function(){
-    this.getDd();
+    this.getData();
   },
   methods:{
-    getDd:function () {
+    getData: function () {
       let vm = this;
-      axios.get('http://127.0.0.1:5000/genarateOrder/' +'?good_id='+vm.id)//请求数据
+      axios.get('http://127.0.0.1:5000/MyAddress/')
         .then(res => {
-          console.log(res);
-          console.log(res.data);
-          if(res.data.code===305){
-            this.$router.push({path: '/login'})
-          }
-          vm.list = res.data.good_dic;
-          vm.add = res.data.addresses_dic;
-          vm.prices=res.data.good_dic.price*vm.num;
+          vm.add = res.data.message;
         })
         .catch(function (error) {
           console.log(error)
         })
     },
-    Inpu:function(){
-      this.prices=this.$refs.Input1.value*this.list.price;
-    },
-    Jia(){
-      this.num=this.$refs.Input1.value;
-      if (this.num<this.list.stock){
-        this.num++;
-        this.prices=this.num*this.list.price;
-      }
-    },
-    Jian(){
-      this.num=this.$refs.Input1.value;
-      if (this.num>1){
-        this.num--;
-        this.prices=this.num*this.list.price;
-      }
-    },
     Tijiao(){
       if (this.add_id!==''){
-        let ti=new URLSearchParams();
-        ti.append('good_id',this.id);
-        ti.append('address_id',this.add_id);
-        ti.append('price',this.prices);
-        ti.append('number',this.num);
-        axios.post('http://127.0.0.1:5000/genarateOrder/',ti,{
+        this.goods.forEach(item => {
+          this.$data.good.push({good_id:item.id,number:item.number,price:item.number*item.price,address_id:this.add_id});
+        });
+        axios.post('http://127.0.0.1:5000/genarateOrderAll/',JSON.stringify(this.good),{
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
           }
@@ -173,43 +149,45 @@
           .then(res=>{
             console.log(res);
             console.log(res.data);
-            if(res.data.code===305){
-              this.$router.push({path: '/login'})
-            } else {
-              this.order = res.data.order;
-              this.msg = res.data.message;
+            if (res.data.code===200){
+              this.order=res.data.order;
               this.show=true;
+            } else {
+              alert(res.data.message);
             }
           })
           .catch(function (error) {
             console.log(error)
           })
-      }else {
+      } else {
         alert('请选择地址');
       }
     },
     orders(){
-      let ord=new URLSearchParams();
-      ord.append('passwd',this.password);
-      ord.append('order_code',this.order.id);
-      axios.post('http://127.0.0.1:5000/referOrder/',ord,{
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-        }
-      })
-        .then(res=>{
-          console.log(res);
-          console.log(res.data);
-          if(res.data.code===200){
-            alert(res.data.message);
-            this.show=false;
-          } else{
-            alert(res.data.message);
+        this.order.forEach(item=>{
+          this.$data.order_id.push(item.id)
+        });
+        this.$data.orderss.push(this.order_id);
+        this.$data.orderss.push({"password":this.password});
+        axios.post('http://127.0.0.1:5000/overOrder/',JSON.stringify(this.orderss),{
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
           }
         })
-        .catch(function (error) {
-          console.log(error)
-        })
+          .then(res=>{
+            console.log(res);
+            console.log(res.data);
+            if(res.data.code===200){
+              alert(res.data.message);
+              this.show=false;
+              this.$router.push({path: '/'})
+            } else{
+              alert(res.data.message);
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
     },
     down(){
       this.show=false;
@@ -262,12 +240,6 @@
   .xiangxi{
     height: 80px;
   }
-  .tianjia{
-    text-align: center;
-    margin-top: 55px;
-    font-size: 1.5em;
-    color: #CC9977;
-  }
   .active{
     border: solid 2px orange;
   }
@@ -318,22 +290,8 @@
     width: 50px;
     height: 50px;
   }
-  .count{
-    display: flex;
-    margin-left: 33px;
-    background: white;
-  }
-  .count>div{
-    width: 22px;
-    height: 26px;
-    border: solid 1px #6C6C6C;
+  .count p{
     text-align: center;
-    line-height: 25px;
-  }
-  .count>input{
-    width: 42px;
-    height: 26px;
-    border: solid 1px #6C6C6C;
   }
   .bb{
     margin-bottom: 20px;
@@ -344,7 +302,13 @@
     background: #FF0036;
     border: none;
     color: white;
-    margin-left: 30px;
+    margin-left: -8px;
+    margin-top: 15px;
+  }
+  .prices{
+    color: red;
+    margin-top: 20px;
+    font-size: 16px;
   }
   .cont{
     width: 100%;
@@ -356,9 +320,9 @@
     width: 100% !important;
   }
   .cont .dindans{
-    margin-top: 10px;
+    margin-top: 80px;
     width: 450px;
-    min-height: 400px !important;
+    min-height: 300px !important;
     border: 1px solid silver;
     border-radius: 5px;
 
@@ -385,7 +349,8 @@
     margin-top: 35px;
   }
   .cont .dindans .con{
-    margin-top: 60px;
+    margin-top: 40px;
+    margin-bottom: 20px;
   }
   .cont .dindans input{
     height: 35px;

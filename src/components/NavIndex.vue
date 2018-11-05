@@ -17,14 +17,14 @@
           <ul class="nav navbar-nav navbar-right" v-show="!login_flag" >
             <li><router-link to="/login"><span>登陆</span></router-link></li>
             <li><router-link to="/regist"><span>注册</span></router-link></li>
-            <li><a href="#">
-              <span class="glyphicon glyphicon-user"></span>
-            </a></li>
-            <li><a href="#">
-              <span class="glyphicon glyphicon-qrcode"></span>
-            </a></li>
             <li>
-              <router-link to="/login"><span class="glyphicon glyphicon-shopping-cart"></span></router-link>
+              <!--<a href="#"><router-link to="/personal"><span class="glyphicon glyphicon-user"></span></router-link></a>-->
+            </li>
+            <li>
+              <!--<a href="#"><span class="glyphicon glyphicon-qrcode"></span></a>-->
+            </li>
+            <li>
+              <!--<router-link to="/login"><span class="glyphicon glyphicon-shopping-cart"></span></router-link>-->
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right" v-show="login_flag">
@@ -59,9 +59,9 @@
           <ul class="nav navbar-nav">
             <li><router-link to="/">首页</router-link></li>
             <li><router-link to="/search">全部分类</router-link></li>
-            <li><router-link :to="{name:'search',params:{name:'自行车'}}">自行车</router-link></li>
-            <li><router-link :to="{name:'search',params:{name:'人身商品'}}">人身商品</router-link></li>
-            <li><router-link :to="{name:'search',params:{name:'车身商品'}}">车身商品</router-link></li>
+            <li><router-link :to="{name:'searchcar',params:{name:1,goodT_index:0,type:1}}">山地车</router-link></li>
+            <li><router-link :to="{name:'searchcar',params:{name:2,goodT_index:1,type:1}}">公路车</router-link></li>
+            <li><router-link :to="{name:'searchcar',params:{name:3,goodT_index:2,type:1}}">折叠车</router-link></li>
             <!--<li><router-link to="/luntans">论坛</router-link></li>-->
           </ul>
         </div>
